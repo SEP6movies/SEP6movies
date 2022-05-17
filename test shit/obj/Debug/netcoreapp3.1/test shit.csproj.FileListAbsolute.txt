@@ -1,0 +1,49 @@
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/bin/Debug/netcoreapp3.1/appsettings.Development.json
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/bin/Debug/netcoreapp3.1/appsettings.json
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/bin/Debug/netcoreapp3.1/Properties/launchSettings.json
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/bin/Debug/netcoreapp3.1/test shit.deps.json
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/bin/Debug/netcoreapp3.1/test shit.runtimeconfig.json
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/bin/Debug/netcoreapp3.1/test shit.runtimeconfig.dev.json
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/bin/Debug/netcoreapp3.1/test shit.dll
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/bin/Debug/netcoreapp3.1/test shit.pdb
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/bin/Debug/netcoreapp3.1/test shit.Views.dll
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/bin/Debug/netcoreapp3.1/test shit.Views.pdb
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.csprojAssemblyReference.cache
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.AssemblyInfoInputs.cache
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.AssemblyInfo.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.csproj.CoreCompileInputs.cache
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.MvcApplicationPartsAssemblyInfo.cache
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.RazorComponent.input.cache
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/RazorDeclaration/App.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/RazorDeclaration/Pages/Counter.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/RazorDeclaration/Pages/FetchData.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/RazorDeclaration/Pages/Index.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/RazorDeclaration/Shared/MainLayout.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/RazorDeclaration/Shared/NavMenu.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/RazorDeclaration/Shared/SurveyPrompt.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/RazorDeclaration/_Imports.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/RazorDeclaration/test shit.dll
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.TagHelpers.input.cache
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.TagHelpers.output.cache
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.RazorCoreGenerate.cache
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/Razor/App.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/Razor/Pages/Counter.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/Razor/Pages/FetchData.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/Razor/Pages/Index.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/Razor/Shared/MainLayout.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/Razor/Shared/NavMenu.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/Razor/Shared/SurveyPrompt.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/Razor/_Imports.razor.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/Razor/Pages/Error.cshtml.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/Razor/Pages/_Host.cshtml.g.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.RazorAssemblyInfo.cache
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.RazorAssemblyInfo.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.RazorTargetAssemblyInfo.cache
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.RazorTargetAssemblyInfo.cs
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.Views.pdb
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/staticwebassets/test shit.StaticWebAssets.Manifest.cache
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/staticwebassets/test shit.StaticWebAssets.xml
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.dll
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.pdb
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.genruntimeconfig.cache
+/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/Debug/netcoreapp3.1/test shit.csproj.CopyComplete

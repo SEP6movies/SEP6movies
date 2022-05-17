@@ -1,7 +1,0 @@
-/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-blazor/bin/net6.0/publish/SEP6-blazor
-/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-blazor/bin/net6.0/publish/appsettings.Development.json
-/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-blazor/bin/net6.0/publish/appsettings.json
-/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-blazor/bin/net6.0/publish/SEP6-blazor.dll
-/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-blazor/bin/net6.0/publish/SEP6-blazor.deps.json
-/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-blazor/bin/net6.0/publish/SEP6-blazor.runtimeconfig.json
-/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-blazor/bin/net6.0/publish/SEP6-blazor.pdb

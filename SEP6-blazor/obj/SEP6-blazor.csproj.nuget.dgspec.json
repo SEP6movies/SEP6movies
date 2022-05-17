@@ -1,0 +1,63 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-blazor/SEP6-blazor.csproj": {}
+  },
+  "projects": {
+    "/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-blazor/SEP6-blazor.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-blazor/SEP6-blazor.csproj",
+        "projectName": "SEP6-blazor",
+        "projectPath": "/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-blazor/SEP6-blazor.csproj",
+        "packagesPath": "/Users/ioanagrigore/.nuget/packages/",
+        "outputPath": "/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-blazor/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/ioanagrigore/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/Users/ioanagrigore/.dotnet/sdk/6.0.202/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

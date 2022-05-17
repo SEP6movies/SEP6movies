@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/test shit.csproj",
-      "projectName": "test shit",
-      "projectPath": "/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/test shit.csproj",
+      "projectUniqueName": "/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-movies/SEP6-movies.csproj",
+      "projectName": "SEP6-movies",
+      "projectPath": "/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-movies/SEP6-movies.csproj",
       "packagesPath": "/Users/ioanagrigore/.nuget/packages/",
-      "outputPath": "/Users/ioanagrigore/RiderProjects/SEP6movies/test shit/obj/",
+      "outputPath": "/Users/ioanagrigore/RiderProjects/SEP6movies/SEP6-movies/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/ioanagrigore/.nuget/NuGet/NuGet.Config"

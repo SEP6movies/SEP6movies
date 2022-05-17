@@ -7,4 +7,8 @@
         <RootNamespace>SEP6_blazor</RootNamespace>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\net6.0\SEP6-blazor.xml</DocumentationFile>
+    </PropertyGroup>
+
 </Project>

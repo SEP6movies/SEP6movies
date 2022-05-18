@@ -1,33 +1,68 @@
 ﻿
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container">
+        <a class="navbar-brand" href=""><img class="logoIcon" src="icons/icons8-movie-64.png"></a>
+        <button class="navbar-toggler" type="button" @onclick="ToggleNavMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+             <ul class="navbar-nav">
+                 <li class="nav-item flex-grow-1">
+                     <form id="form"> 
+                         <input type="search" id="query" name="q" placeholder="Search...">
+                         <button>Search</button>
+                     </form>
+                 </li>
+                 <li class="nav-item flex-grow-1">
+                     <img class="advancedSearchIcon"src="icons/icons8-plus-+-64.png">
+                 </li>
+                 <div class="dropdown">
+                   <div class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <img class="profileIcon" alt="user" src="icons/icons8-male-user-64.png">
+                   </div>
+                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                     <a class="dropdown-item" href="#">Action</a>
+                     <a class="dropdown-item" href="#">Another action</a>
+                     <a class="dropdown-item" href="#">Something else here</a>
+                   </div>
+                 </div>
+             </ul>
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <NavLink class="nav-link text-dark" href="" Match="NavLinkMatch.All">
+                        <span aria-hidden="true"></span> <h5 class="navigation">Movies</h5>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link text-dark" href="Actors">
+                        <span aria-hidden="true"></span> <h5 class="navigation">Actors</h5>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link text-dark" href="Directors">
+                        <span aria-hidden="true"></span> <h5 class="navigation">Directors</h5>
+                    </NavLink>
+                </li>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-    </ul>
-</div>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
 
 @code {
-    private bool collapseNavMenu = true;
+    bool collapseNavMenu = true;
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    string baseMenuClass = "navbar-collapse d-sm-inline-flex flex-sm-row-reverse";
 
-    private void ToggleNavMenu()
+    string NavMenuCssClass => baseMenuClass + (collapseNavMenu ? " collapse" : "");
+
+    void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
+   
 
 }

@@ -5,4 +5,9 @@
         <RootNamespace>test_shit</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\test-images\test-image-1.jpeg" />
+      <_ContentIncludedByDefault Remove="wwwroot\test-images\test-image-2.webp" />
+    </ItemGroup>
+
 </Project>

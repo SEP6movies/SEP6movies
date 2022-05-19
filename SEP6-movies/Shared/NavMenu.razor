@@ -14,18 +14,18 @@
                      </form>
                  </li>
                  <li class="nav-item flex-grow-1">
-                     <img class="advancedSearchIcon" alt="advanced search" src="icons/icons8-plus64.png">
+                     <a class="navbar-brand" href="AdvancedSearch"><img class="advancedSearchIcon" alt="advanced search" src="icons/icons8-plus64.png"></a>
                  </li>
                  <div class="dropdown">
                    <div class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                      <img class="profileIcon" alt="user" src="icons/icons8-male-user-64.png">
                    </div>
                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                       <a class="dropdown-item" href="#">Profile</a>
-                       <a class="dropdown-item" href="#">Favorites</a>
-                       <a class="dropdown-item" href="#">Friends</a>
+                       <a class="dropdown-item" href="Profile">Profile</a>
+                       <a class="dropdown-item" href="Favorites">Favorites</a>
+                       <a class="dropdown-item" href="Friends">Friends</a>
                        <div class="dropdown-divider"></div>
-                       <a class="dropdown-item" href="#">Settings</a>
+                       <a class="dropdown-item" href="Settings">Settings</a>
                    </div>
                  </div>
              </ul>
@@ -45,6 +45,17 @@
                         <span aria-hidden="true"></span> <h5 class="navigation">Directors</h5>
                     </NavLink>
                 </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link text-dark" href="SelectedMovie" Match="NavLinkMatch.All">
+                        <span aria-hidden="true"></span> <h5 class="navigation">SelectedMovie(test)</h5>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link text-dark" href="SelectedActor" Match="NavLinkMatch.All">
+                        <span aria-hidden="true"></span> <h5 class="navigation">SelectedActor(test)</h5>
+                    </NavLink>
+                </li>
+                
 
             </ul>
 

@@ -15,5 +15,5 @@ steps:
 # Publish the app.
 images: [ 'gcr.io/$PROJECT_ID/testapp:2.1' ]
 
- options:
+options:
  logging: CLOUD_LOGGING_ONLY

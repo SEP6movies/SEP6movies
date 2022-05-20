@@ -1,25 +1,16 @@
+# Example build script to create a Docker image from a .NET Core 2.0 Web Api app.
 steps:
-  # Docker Build
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 
-           'us-central1-docker.pkg.dev/$AA3G-LXK0-LLJ0-VX77/my-docker-repo/myimage', 
-           '.']
 
-  # Docker Push
-  - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 
-           'us-central1-docker.pkg.dev/$AA3G-LXK0-LLJ0-VX77/my-docker-repo/myimage']
+# .NET Core 2.0 by default restores before any build, so we can
+# combine the restore and publish operations in a single statement.
+- name: 'microsoft/dotnet:sdk'
+  entrypoint: 'dotnet'
+  args: [ 'publish', '-c', 'Release' ]
 
-  # Entrypoint, timeout and environment variables
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
-    timeout: 240s
-    args: ['compute', 'instances', 
-           'create-with-container', 'my-vm-name',
-           '--container-image', 
-           'us-central1-docker.pkg.dev/$AA3G-LXK0-LLJ0-VX77/my-docker-repo/myimage']
-    env:
-      - 'CLOUDSDK_COMPUTE_REGION=eu-central1'
-      - 'CLOUDSDK_COMPUTE_ZONE=eu-central1-a'
- options:
- logging: CLOUD_LOGGING_ONLY
+# Build the app image.
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/$AA3G-LXK0-LLJ0-VX77/testapp:2.1', '.' ]
+  dir: './bin/Release/netcoreapp2.1/publish'
+
+# Publish the app.
+images: [ 'gcr.io/$PROJECT_ID/testapp:2.1' ]

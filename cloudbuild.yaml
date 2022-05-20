@@ -2,13 +2,13 @@ steps:
   # Docker Build
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 
-           'us-central1-docker.pkg.dev/${AA3G-LXK0-LLJ0-VX77}/my-docker-repo/myimage', 
+           'us-central1-docker.pkg.dev/$AA3G-LXK0-LLJ0-VX77/my-docker-repo/myimage', 
            '.']
 
   # Docker Push
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 
-           'us-central1-docker.pkg.dev/${AA3G-LXK0-LLJ0-VX77}/my-docker-repo/myimage']
+           'us-central1-docker.pkg.dev/$AA3G-LXK0-LLJ0-VX77/my-docker-repo/myimage']
 
   # Entrypoint, timeout and environment variables
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -17,9 +17,9 @@ steps:
     args: ['compute', 'instances', 
            'create-with-container', 'my-vm-name',
            '--container-image', 
-           'us-central1-docker.pkg.dev/${AA3G-LXK0-LLJ0-VX77}/my-docker-repo/myimage']
+           'us-central1-docker.pkg.dev/$AA3G-LXK0-LLJ0-VX77/my-docker-repo/myimage']
     env:
-      - 'CLOUDSDK_COMPUTE_REGION=us-central1'
-      - 'CLOUDSDK_COMPUTE_ZONE=us-central1-a'
+      - 'CLOUDSDK_COMPUTE_REGION=eu-central1'
+      - 'CLOUDSDK_COMPUTE_ZONE=eu-central1-a'
  options:
  logging: CLOUD_LOGGING_ONLY

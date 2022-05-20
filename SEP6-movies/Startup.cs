@@ -10,14 +10,17 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using test_shit.Data;
+using test_shit.Network;
 
 namespace test_shit
 {
     public class Startup
     {
+        private NetworkImpl _networkImpl = new NetworkImpl();
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _networkImpl.getUser();
         }
 
         public IConfiguration Configuration { get; }

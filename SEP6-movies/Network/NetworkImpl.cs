@@ -270,9 +270,9 @@ namespace test_shit.Network
 
 
                 command = new SqlCommand(sql, rds);
-                command.Parameters.AddWithValue("@user", user.Username);
-                command.Parameters.AddWithValue("@pass", user.Password);
-                command.Parameters.AddWithValue("@email", user.Email);
+                command.Parameters.AddWithValue("@user", user.username);
+                command.Parameters.AddWithValue("@pass", user.password);
+                command.Parameters.AddWithValue("@email", user.email);
 
 
                 command.ExecuteNonQuery();

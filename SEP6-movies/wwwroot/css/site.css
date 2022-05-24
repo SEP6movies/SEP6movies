@@ -366,6 +366,43 @@ button:not(:disabled) {
 }
 /*--------------------------------------------------------------------------------------------------*/
 
+/*Favorite Movies*/
+/*--------------------------------------------------------------------------------------------------*/
+.favoriteMovies{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 30px;
+}
+
+.filterMovies{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 20px;
+}
+
+.dropdownSelect{
+    border-radius: 10px;
+    width: 100px;
+    padding: 2px;
+}
+.resetFiltersButton{
+    border: none;
+    background: transparent;
+    text-decoration: underline;
+    color: royalblue;
+}
+
+.goButton{
+    width: 60px;
+}
+
+.friendsNav{
+    border-right: 1px solid lightgray;
+}
+/*--------------------------------------------------------------------------------------------------*/
+
 
 /*--------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------*/

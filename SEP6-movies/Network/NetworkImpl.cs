@@ -48,9 +48,9 @@ namespace test_shit.Network
         }
 
 
-        public User getUser()
+        public bool checkForUser(string first,string pass)
         {
-            User user = new User();
+            bool exits = false;
             try
             {
                
@@ -58,23 +58,24 @@ namespace test_shit.Network
               
                 rds.Open();
 
-                string sql = "insert into dbo.TestTable values(@date,@kage)";
+                string sql = "select * from dbo.users where (username=@user or email=@email) and password=@pass";
                 
 
                 command = new SqlCommand(sql, rds);
-                command.Parameters.AddWithValue("@date", DateTime.Now.ToString("yyyy-MM-dd"));
-                command.Parameters.AddWithValue("@kage", "test1223");
+                command.Parameters.AddWithValue("@user", first);
+                command.Parameters.AddWithValue("@email",first);
+                command.Parameters.AddWithValue("@pass", pass);
 
-                command.ExecuteNonQuery();
+                dataReader = command.ExecuteReader();
 
 
-                /*
+                
                 while (dataReader.Read())
                 {
-                 
-                }*/
+                    exits = true;
+                }
         
-                //dataReader.Close();
+                dataReader.Close();
 
                 rds.Close();
 
@@ -86,7 +87,7 @@ namespace test_shit.Network
             }
 
 
-            return user;
+            return exits;
         }
 
         public async Task<Movie> getMovieFromApi(int movieID)
@@ -256,6 +257,37 @@ namespace test_shit.Network
             }
         }
 
+        public void addUserToDB(User user)
+        {
+            try
+            {
+
+                rds = new SqlConnection(connectionString);
+
+                rds.Open();
+
+                string sql = "insert into dbo.Users(username,password,email) values(@user,@pass,@email)";
+
+
+                command = new SqlCommand(sql, rds);
+                command.Parameters.AddWithValue("@user", user.Username);
+                command.Parameters.AddWithValue("@pass", user.Password);
+                command.Parameters.AddWithValue("@email", user.Email);
+
+
+                command.ExecuteNonQuery();
+
+
+
+
+                rds.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
+        }
+
         public async Task<TopRated> getTopRatedMoviesFromApi()
         {
             TopRated movies = new TopRated();
@@ -269,6 +301,37 @@ namespace test_shit.Network
             }
            
             return movies;
+        }
+
+        public void addMovieToDB(Movie movie)
+        {
+            try
+            {
+
+                rds = new SqlConnection(connectionString);
+
+                rds.Open();
+
+                string sql = "insert into dbo.movies values(@id,@title,@year)";
+
+                int year = int.Parse(movie.release_date.Substring(0, 4));
+                command = new SqlCommand(sql, rds);
+                command.Parameters.AddWithValue("@id", movie.id);
+                command.Parameters.AddWithValue("@title", movie.original_title);
+                command.Parameters.AddWithValue("@year", year);
+
+
+                command.ExecuteNonQuery();
+
+
+
+
+                rds.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
         }
     }
 }

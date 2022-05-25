@@ -23,15 +23,20 @@ namespace test_shit.Network
         {
             connectionString = @"Data Source=35.195.143.0;Initial Catalog=SEP6Movies;User ID=sqlserver;Password=c`H0nsr2DAss|#q4;TrustServerCertificate=True";
             test();
+           
         }
 
         private async Task test()
         {
             /*
+            Console.WriteLine("her");
             Actor actor = new Actor();
             Credits credits = new Credits();
-            _movie = await getMovieFromApi(1024);
-            actor = await getActorFromApi(1017);
+            PopularActors popularActors = new PopularActors();
+            popularActors = await getPopularActors();
+            Console.WriteLine(popularActors.results[0].name);
+            _movie = await getMovieFromApi(15724);
+            actor = await getActorFromApi(108);
             credits = await getCreditsFromApi(1024);
 
             Console.WriteLine(_movie.original_title);
@@ -39,12 +44,18 @@ namespace test_shit.Network
             Console.WriteLine(credits.cast.Count);
             
 
-            TopRated movies = new TopRated();
-            movies = await getTopRatedMoviesFromApi();
+            TopRated moviesz = new TopRated();
+            moviesz = await getTopRatedMoviesFromApi();
             
-            Console.WriteLine(movies.results[0].original_title);
+            Console.WriteLine(moviesz.results[0].original_title);
+            
+            
+            List<Movie> movies = new List<Movie>();
+            movies = await getAllMovies();
+            Console.WriteLine(movies[2].original_title);
+            Console.WriteLine("tasda");
             */
-            
+
         }
 
 
@@ -93,9 +104,9 @@ namespace test_shit.Network
         public async Task<Movie> getMovieFromApi(int movieID)
         {
             Movie movie = new Movie();
-
+            movieID = calculateTrueID(movieID);
             HttpResponseMessage responseMessage = await client.GetAsync(
-                "https://api.themoviedb.org/3/movie/"+movieID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
+                "https://api.themoviedb.org/3/movie/tt"+movieID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
             if (responseMessage.IsSuccessStatusCode)
             {
                 movie = await responseMessage.Content.ReadAsAsync<Movie>();
@@ -105,8 +116,47 @@ namespace test_shit.Network
             return movie;
         }
 
+        public async Task<List<Movie>> getAllMovies()
+        {
+            List<Movie> movies = new List<Movie>();
+            List<int> movieIds = new List<int>();
+            movieIds = getAllMoviesFromDB();
+            for (int i = 0; i < movieIds.Count; i++)
+            {
+                movies.Add(await getMovieFromApi(movieIds[i]));
+                Console.WriteLine(i);
+            }
+
+            return movies;
+        }
+
+        public async Task<Actor> getActorFromApiWithImdbID(int actorID)
+        {
+            FindActorByID personResult = new FindActorByID();
+            int trueActorID = calculateTrueID(actorID);
+            
+            HttpResponseMessage responseMessage1 = await client.GetAsync(
+                "https://api.themoviedb.org/3/find/nm"+trueActorID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US&external_source=imdb_id");
+            if (responseMessage1.IsSuccessStatusCode)
+            {
+                personResult = await responseMessage1.Content.ReadAsAsync<FindActorByID>();
+            }
+            
+            Actor actor = new Actor();
+            HttpResponseMessage responseMessage = await client.GetAsync(
+                "https://api.themoviedb.org/3/person/"+personResult.person_results[0].id+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                actor = await responseMessage.Content.ReadAsAsync<Actor>();
+            }
+
+
+            return actor;
+        }
         public async Task<Actor> getActorFromApi(int actorID)
         {
+           //The ID that tmdb uses is different from imdb so therefore this method should only be used if the actorID
+           //comes from one of the other methods such as getCredits
             Actor actor = new Actor();
             HttpResponseMessage responseMessage = await client.GetAsync(
                 "https://api.themoviedb.org/3/person/"+actorID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
@@ -117,6 +167,30 @@ namespace test_shit.Network
 
 
             return actor;
+        }
+
+        private int calculateTrueID(int ID)
+        {
+            int trueID = 0;
+            string temp = ID.ToString();
+            bool digits = true;
+            while (digits)
+            {
+                if (temp.Length >= 7)
+                {
+                    digits = false;
+                }
+
+                if (temp.Length < 7)
+                {
+                    temp = "0" + temp;
+                }
+
+            }
+
+            trueID = Int32.Parse(temp);
+
+            return trueID;
         }
 
         public async Task<Credits> getCreditsFromApi(int movieID)

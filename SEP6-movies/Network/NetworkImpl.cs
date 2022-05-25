@@ -176,6 +176,7 @@ namespace test_shit.Network
             if (responseMessage.IsSuccessStatusCode)
             {
                 actor = await responseMessage.Content.ReadAsAsync<Actor>();
+                actor.profile_path = "https://image.tmdb.org/t/p/original" + actor.profile_path;
             }
 
 
@@ -215,10 +216,22 @@ namespace test_shit.Network
             if (responseMessage.IsSuccessStatusCode)
             {
                 credits = await responseMessage.Content.ReadAsAsync<Credits>();
+                
+            }
+
+            for (int i = 0; i < credits.cast.Count; i++)
+            {
+                credits.cast[i].profile_path = "https://image.tmdb.org/t/p/original" + credits.cast[i].profile_path;
+            }
+
+            for (int i = 0; i < credits.crew.Count; i++)
+            {
+                credits.crew[i].profile_path = "https://image.tmdb.org/t/p/original" + credits.crew[i].profile_path;
             }
 
             return credits;
         }
+        
 
         public List<int> getAllMoviesFromDB()
         {
@@ -311,6 +324,12 @@ namespace test_shit.Network
                popularActors = await responseMessage.Content.ReadAsAsync<PopularActors>();
             }
 
+            for (int i = 0; i < popularActors.results.Count; i++)
+            {
+                popularActors.results[i].profile_path =
+                    "https://image.tmdb.org/t/p/original" + popularActors.results[i].profile_path;
+            }
+
             return popularActors;
         }
 
@@ -385,6 +404,11 @@ namespace test_shit.Network
             {
                 movies = await responseMessage.Content.ReadAsAsync<TopRated>();
                 
+            }
+
+            for (int i = 0; i < movies.results.Count; i++)
+            {
+                movies.results[i].poster_path = "https://image.tmdb.org/t/p/original" + movies.results[i].poster_path;
             }
            
             return movies;

@@ -39,7 +39,7 @@ namespace test_shit.Network
             actor = await getActorFromApi(108);
             credits = await getCreditsFromApi(1024);
 
-            Console.WriteLine(_movie.original_title);
+            Console.WriteLine(_movie.original_title + " Movie");
             Console.WriteLine(actor.name);
             Console.WriteLine(credits.cast.Count);
             
@@ -52,7 +52,7 @@ namespace test_shit.Network
             
             List<Movie> movies = new List<Movie>();
             movies = await getAllMovies();
-            Console.WriteLine(movies[2].original_title);
+            Console.WriteLine(movies[0].id + "asdsasajfa");
             Console.WriteLine("tasda");
             */
 
@@ -104,9 +104,10 @@ namespace test_shit.Network
         public async Task<Movie> getMovieFromApi(int movieID)
         {
             Movie movie = new Movie();
-            movieID = calculateTrueID(movieID);
+            string trueMovieID = "";
+            trueMovieID = calculateTrueID(movieID);
             HttpResponseMessage responseMessage = await client.GetAsync(
-                "https://api.themoviedb.org/3/movie/tt"+movieID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
+                "https://api.themoviedb.org/3/movie/tt"+trueMovieID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
             if (responseMessage.IsSuccessStatusCode)
             {
                 movie = await responseMessage.Content.ReadAsAsync<Movie>();
@@ -133,7 +134,7 @@ namespace test_shit.Network
         public async Task<Actor> getActorFromApiWithImdbID(int actorID)
         {
             FindActorByID personResult = new FindActorByID();
-            int trueActorID = calculateTrueID(actorID);
+            string trueActorID = calculateTrueID(actorID);
             
             HttpResponseMessage responseMessage1 = await client.GetAsync(
                 "https://api.themoviedb.org/3/find/nm"+trueActorID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US&external_source=imdb_id");
@@ -169,9 +170,9 @@ namespace test_shit.Network
             return actor;
         }
 
-        private int calculateTrueID(int ID)
+        private string calculateTrueID(int ID)
         {
-            int trueID = 0;
+            string trueID = "";
             string temp = ID.ToString();
             bool digits = true;
             while (digits)
@@ -188,7 +189,7 @@ namespace test_shit.Network
 
             }
 
-            trueID = Int32.Parse(temp);
+            trueID = temp;
 
             return trueID;
         }

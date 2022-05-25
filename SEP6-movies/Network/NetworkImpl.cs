@@ -28,7 +28,7 @@ namespace test_shit.Network
 
         private async Task test()
         {
-            /*
+            
             Console.WriteLine("her");
             Actor actor = new Actor();
             Credits credits = new Credits();
@@ -54,7 +54,7 @@ namespace test_shit.Network
             movies = await getAllMovies();
             Console.WriteLine(movies[0].id + "asdsasajfa");
             Console.WriteLine("tasda");
-            */
+            
 
         }
 
@@ -104,14 +104,26 @@ namespace test_shit.Network
         public async Task<Movie> getMovieFromApi(int movieID)
         {
             Movie movie = new Movie();
-            string trueMovieID = "";
-            trueMovieID = calculateTrueID(movieID);
-            HttpResponseMessage responseMessage = await client.GetAsync(
-                "https://api.themoviedb.org/3/movie/tt"+trueMovieID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
-            if (responseMessage.IsSuccessStatusCode)
+            try
             {
-                movie = await responseMessage.Content.ReadAsAsync<Movie>();
+             
+                string trueMovieID = "";
+                trueMovieID = calculateTrueID(movieID);
+                HttpResponseMessage responseMessage = await client.GetAsync(
+                    "https://api.themoviedb.org/3/movie/tt"+trueMovieID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    movie = await responseMessage.Content.ReadAsAsync<Movie>();
+                    movie.poster_path = "https://image.tmdb.org/t/p/original" + movie.poster_path;
+                }
             }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
 
 
             return movie;

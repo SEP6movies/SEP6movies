@@ -23,6 +23,7 @@ namespace test_shit.Network
         {
             connectionString = @"Data Source=35.195.143.0;Initial Catalog=SEP6Movies;User ID=sqlserver;Password=c`H0nsr2DAss|#q4;TrustServerCertificate=True";
             test();
+            Console.WriteLine("frima");
            
         }
 
@@ -45,9 +46,9 @@ namespace test_shit.Network
             
 
             TopRated moviesz = new TopRated();
-            moviesz = await getTopRatedMoviesFromApi();
+            moviesz = await getMovieBasedOnGenreFromApi(28);
             
-            Console.WriteLine(moviesz.results[0].original_title);
+            Console.WriteLine(moviesz.results[0].poster_path + " this");
             
             
             List<Movie> movies = new List<Movie>();
@@ -111,6 +112,34 @@ namespace test_shit.Network
                 trueMovieID = calculateTrueID(movieID);
                 HttpResponseMessage responseMessage = await client.GetAsync(
                     "https://api.themoviedb.org/3/movie/tt"+trueMovieID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    movie = await responseMessage.Content.ReadAsAsync<Movie>();
+                    movie.poster_path = "https://image.tmdb.org/t/p/original" + movie.poster_path;
+                }
+            }
+
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
+
+
+            return movie;
+        }
+
+        public async Task<Movie> getMovieFromApiWithApiIds(int ids)
+        {
+            //Api has their own id system different from imdb id system
+            Movie movie = new Movie();
+            try
+            {
+             
+              
+                HttpResponseMessage responseMessage = await client.GetAsync(
+                    "https://api.themoviedb.org/3/movie/"+ids+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     movie = await responseMessage.Content.ReadAsAsync<Movie>();

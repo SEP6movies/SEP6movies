@@ -1,6 +1,7 @@
 @page "/Movies"
 @using test_shit.Network
 @using test_shit.Data
+@inject NetworkImpl _networkImpl
 <div class="mainView">
     <div class="container">
         <div class="row">
@@ -85,75 +86,43 @@
 
         </div>
         <div class="row">
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-
+            @if (!_movies.Any())
+            {
+                <p>Loading...</p>
+            }
+            else
+            {
+                @foreach (var item in _movies)
+                {
+                    <div class="col-md-3 favoriteMovies">
+                        <img src=@item.poster_path alt="" style="width: 300px"/>
+                    </div>
+                }
+                <div>done</div>
+            }
         </div>
-
-        <div class="row">
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <img src="test-images/movie_example.jpg" alt="movie" style="width:200px">
-            </div>
-
-        </div>
-
-
-
     </div>
 </div>
 
 @code {
+    private List<Movie> _movies = new List<Movie>();
+    string SearchTerm { get; set; } = "";
    
     
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _movies = await _networkImpl.getAllMovies();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("it fucked here");
+            Console.WriteLine(e);
+        }
+    }
+
+
 }

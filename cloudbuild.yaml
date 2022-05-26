@@ -1,18 +1,23 @@
-# Example build script to create a Docker image from a .NET Core 2.0 Web Api app.
-steps:
+ steps:
+ # Build the container image
+ - name: 'gcr.io/cloud-builders/docker'
+   args: ['build', '-t', 'gcr.io/$PROJECT_ID/default-v0:$COMMIT_SHA', '.']
+ # Push the container image to Container Registry
+ - name: 'gcr.io/cloud-builders/docker'
+   args: ['push', 'gcr.io/$PROJECT_ID/default-v0:$COMMIT_SHA']
+ # Deploy container image to Cloud Run
+ - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+   entrypoint: gcloud
+   args:
+   - 'run'
+   - 'deploy'
+   - 'default-v0'
+   - '--image'
+   - 'gcr.io/$PROJECT_ID/default-v0:$COMMIT_SHA'
+   - '--region'
+   - 'us-central1'
+ images:
+ - 'gcr.io/$PROJECT_ID/default-v0:$COMMIT_SHA'
 
-# .NET Core 2.0 by default restores before any build, so we can
-# combine the restore and publish operations in a single statement.
-- name: 'microsoft/dotnet:sdk'
-  entrypoint: 'dotnet'
-  args: [ 'publish', '-c', 'Release' ]
-
-# Build the app image.
-- name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/https://sep6-350412.ew.r.appspot.com/$PROJECT_ID/SEP6movies', '.' ]
-  dir: './bin/Release/netcoreapp2.1/publish'
-
-# Publish the app.
-images: [ 'gcr.io/https://sep6-350412.ew.r.appspot.com/$PROJECT_ID/SEP6movies' ]
 options:
  logging: CLOUD_LOGGING_ONLY

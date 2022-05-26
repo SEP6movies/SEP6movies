@@ -8,11 +8,11 @@ steps:
   args: [ 'publish', '-c', 'Release' ]
 
 # Build the app image.
-- name: 'eu.gcr.io/cloud-builders/docker'
+- name: 'gcr.io/cloud-builders/docker'
   args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/SEP6movies', '.' ]
   dir: './bin/Release/netcoreapp3.1/publish'
 
 # Publish the app.
-images: [ 'eu.gcr.io/PROJECT_ID/SEP6movies' ]
+images: [ 'gcr.io/PROJECT_ID/SEP6movies' ]
 options:
  logging: CLOUD_LOGGING_ONLY

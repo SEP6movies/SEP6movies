@@ -1,12 +1,12 @@
  steps:
  # Build the container image
- - name: 'eu.gcr.io/cloud-builders/docker'
+ - name: 'gcr.io/cloud-builders/docker'
    args: ['eu.gcr.io/sep6-350412/appengine/default.v0:$COMMIT_SHA', '.']
  # Push the container image to Container Registry
  - name: 'eu.gcr.io/cloud-builders/docker'
    args: ['push', 'eu.gcr.io/sep6-350412/appengine/default.v0:$COMMIT_SHA']
  # Deploy container image to Cloud Run
- - name: 'eu.gcr.io/google.com/cloudsdktool/cloud-sdk'
+ - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
    entrypoint: gcloud
    args:
    - 'run'

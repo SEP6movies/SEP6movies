@@ -9,10 +9,10 @@ steps:
 
 # Build the app image.
 - name: 'gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'eu.gcr.io/https://sep6-350412.ew.r.appspot.com/$PROJECT_ID/SEP6movies', '.' ]
-  dir: './bin/Release/netcoreapp2.1/publish'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/SEP6movies', '.' ]
+  dir: './bin/Release/netcoreapp3.1/publish'
 
 # Publish the app.
-images: [ 'eu.gcr.io/https://sep6-350412.ew.r.appspot.com/$PROJECT_ID/SEP6movies' ]
+images: [ 'gcr.io/PROJECT_ID/SEP6movies' ]
 options:
  logging: CLOUD_LOGGING_ONLY

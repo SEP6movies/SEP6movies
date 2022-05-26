@@ -414,6 +414,26 @@ namespace test_shit.Network
             return movies;
         }
 
+        public async Task<TopRated> getMovieBasedOnGenreFromApi(int genreID)
+        {
+            TopRated movies = new TopRated();
+            
+            HttpResponseMessage responseMessage = await client.GetAsync(
+                "https://api.themoviedb.org/3/discover/movie?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres="+genreID+"&with_watch_monetization_types=flatrate");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                movies = await responseMessage.Content.ReadAsAsync<TopRated>();
+                
+            }
+
+            for (int i = 0; i < movies.results.Count; i++)
+            {
+                movies.results[i].poster_path = "https://image.tmdb.org/t/p/original" + movies.results[i].poster_path;
+            }
+           
+            return movies;
+        }
+
         public void addMovieToDB(Movie movie)
         {
             try

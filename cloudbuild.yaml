@@ -1,7 +1,7 @@
  steps:
  # Build the container image
  - name: 'gcr.io/cloud-builders/docker'
-   args: ['eu.gcr.io/sep6-350412/appengine/default.v0:$COMMIT_SHA', '.']
+   args: ['gcr.io/sep6-350412/appengine/default.v0:$COMMIT_SHA', '.']
  # Push the container image to Container Registry
  - name: 'gcr.io/cloud-builders/docker'
    args: ['push', 'eu.gcr.io/sep6-350412/appengine/default.v0:$COMMIT_SHA']
@@ -13,11 +13,11 @@
    - 'deploy'
    - 'default-v0'
    - '--image'
-   - 'eu.gcr.io/sep6-350412/appengine/default.v0:$COMMIT_SHA'
+   - 'gcr.io/sep6-350412/appengine/default.v0:$COMMIT_SHA'
    - '--region'
    - 'us-central1'
  images:
- - 'eu.gcr.io/sep6-350412/appengine/default.v0:$COMMIT_SHA'
+ - 'gcr.io/sep6-350412/appengine/default.v0:$COMMIT_SHA'
 
 options:
  logging: CLOUD_LOGGING_ONLY

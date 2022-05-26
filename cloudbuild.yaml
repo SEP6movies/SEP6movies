@@ -13,11 +13,11 @@
    - 'deploy'
    - 'default-v0'
    - '--image'
-   - 'eu.gcr.io/eu.gcr.io/sep6-350412/appengine/default.v0:$COMMIT_SHA'
+   - 'eu.gcr.io/sep6-350412/appengine/default.v0:$COMMIT_SHA'
    - '--region'
    - 'us-central1'
  images:
- - 'eu.gcr.io/eu.gcr.io/sep6-350412/appengine/default.v0:$COMMIT_SHA'
+ - 'eu.gcr.io/sep6-350412/appengine/default.v0:$COMMIT_SHA'
 
 options:
  logging: CLOUD_LOGGING_ONLY

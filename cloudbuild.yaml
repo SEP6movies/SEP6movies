@@ -9,7 +9,7 @@ steps:
 
 # Build the app image.
 - name: 'eu.gcr.io/cloud-builders/docker'
-  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/SEP6movies', '.' ]
+  args: [ 'build', '-t', 'eu.gcr.io/$PROJECT_ID/SEP6movies', '.' ]
   dir: './bin/Release/netcoreapp3.1/publish'
 
 # Publish the app.

@@ -9,7 +9,7 @@ WORKDIR /src
 COPY ["SEP6-movies.csproj", "./"]
 RUN dotnet restore "SEP6-movies.csproj"
 COPY . .
-WORKDIR "/src/SEP6-movies"
+WORKDIR "/src"
 RUN dotnet build "SEP6-movies.csproj" -c Release -o /app/build
 
 FROM build AS publish

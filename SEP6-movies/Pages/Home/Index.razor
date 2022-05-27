@@ -3,6 +3,7 @@
 @using test_shit.Network
 @inject IJSRuntime JSRuntime
 @inject NetworkImpl _networkImpl
+@inject NavigationManager NavigationManager
  
  
 <div class="mainView">
@@ -27,13 +28,13 @@
                                 var index = item.i;
                                 if (index==0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt="" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
@@ -68,13 +69,13 @@
                                 var index = item.i;
                                 if (index==0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt="" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
@@ -110,13 +111,13 @@
                                 var index = item.i;
                                 if (index==0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt="" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
@@ -153,13 +154,13 @@
                                 var index = item.i;
                                 if (index==0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt="" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
@@ -196,13 +197,13 @@
                                 var index = item.i;
                                 if (index==0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt="" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
@@ -239,13 +240,13 @@
                                 var index = item.i;
                                 if (index==0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt="" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
@@ -282,13 +283,13 @@
                                 var index = item.i;
                                 if (index==0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt="" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
@@ -325,13 +326,13 @@
                                 var index = item.i;
                                 if (index==0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt="" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
@@ -368,13 +369,13 @@
                                 var index = item.i;
                                 if (index==0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt="" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
@@ -411,13 +412,13 @@
                                 var index = item.i;
                                 if (index==0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt="" />
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
@@ -477,6 +478,11 @@
 
     string SearchTerm { get; set; } = "";
     
+    private void ToMovieDetails(TopRated.Result movie)
+    {
+        NavigationManager.NavigateTo($"/SelectedMovie/{movie.id}");
+        
+    }
     
     protected override async Task OnInitializedAsync()
     {

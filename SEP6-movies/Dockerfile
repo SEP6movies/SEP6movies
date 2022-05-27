@@ -2,6 +2,8 @@
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS base
 WORKDIR /app
 EXPOSE $PORT
+ENV PORT 8080
+ENV HOST 0.0.0.0
 EXPOSE 80
 EXPOSE 8080
 EXPOSE 443

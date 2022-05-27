@@ -1,4 +1,7 @@
-@page "/SelectedActor"
+@page "/SelectedActor/{id:int}"
+@using test_shit.Network
+@using test_shit.Data
+@inject NetworkImpl _networkImpl
 
 <div class="mainView">
     <div class="container">
@@ -11,7 +14,7 @@
                         <label>Name</label>
                     </div>
                     <div class="col-md-9">
-                        <p>ahahahhaha </p>
+                        <p>ahhhaha</p>
                     </div>
                 </div>
             </div>
@@ -94,5 +97,23 @@
 </div>
 
 @code {
+    [Parameter]
+    public int id { get; set; }
     
+    /*FOR NAVIGATION*/
+    /*public Actor _actor;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _actor = await _networkImpl.getActorFromApiWithImdbID(id);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }*/
+
+
 }

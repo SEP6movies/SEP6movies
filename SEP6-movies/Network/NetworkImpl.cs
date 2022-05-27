@@ -342,7 +342,8 @@ namespace test_shit.Network
 
             return movieFavoritesIDs;
         }
-
+        
+       
         public async Task<PopularActors> getPopularActors()
         {
             PopularActors popularActors = new PopularActors();
@@ -391,7 +392,7 @@ namespace test_shit.Network
                 Console.WriteLine(e.StackTrace);
             }
         }
-
+        
         public void addUserToDB(User user)
         {
             try

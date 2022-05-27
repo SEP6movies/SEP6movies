@@ -1,37 +1,64 @@
 @page "/Actors"
-
+@using test_shit.Network
+@using test_shit.Data
+@inject NetworkImpl _networkImpl
+@inject NavigationManager NavigationManager
 <div class="mainView">
     <div class="container">
         <div class="row">
-            <h4>Actors</h4>
-        </div>
-        <div class="row">
             <div class="col-md-12">
-                <h3 class="actorTitles">Most popular</h3>
+                <h3 class="actorTitles">Most popular actors</h3>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
-                <p>///////////////////////////////////////////////////////////////////// image slider here/////////////////////////////////////////////////////////////</p>
-            </div>
-        </div>
-    
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="actorTitles">Most credits</h3>
-            </div>
-        </div>
-        
-        <div class="row">
-                    <div class="col-md-12">
-                        <p>///////////////////////////////////////////////////////////////////// image slider here/////////////////////////////////////////////////////////////</p>
+            @foreach (var item in _popularActorsResults)
+            {
+                <div class="col-md-3 favoriteMovies">
+                    <div class="card mb-4 box-shadow">
+                        @if (@item.profile_path == null)
+                        {
+                            <img src="images/image1.png" style="width: 200px" />
+                            <p class="card-text">@item.name</p>
+                        }
+                        else
+                        {
+                            <img src=@item.profile_path style="width: 200px" />
+                            <p class="card-text">@item.name</p>
+                        }
                     </div>
                 </div>
+            }
+        </div>
     </div>
     
 </div>
 
 @code {
-   
+    private List<PopularActors.Result> _popularActorsResults = new List<PopularActors.Result>();
+    private PopularActors _popularActor;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _popularActor = await _networkImpl.getPopularActors();
+        }
+        catch (NullReferenceException e)
+        {
+            Console.WriteLine(e);
+        }
+
+        foreach (var item in _popularActor.results)
+        {
+            _popularActorsResults.Add(item);
+        }
+    }
+    
+    /*FOR NAVIGATION*/
+    /*private void ToActorDetails(PopularActors.Result actor)
+    {
+        NavigationManager.NavigateTo($"/SelectedActor/{actor.id}");
+        /*Console.WriteLine("we gooooooo for " + movie.imdb_id + "   " + movie.id);#1#
+    }*/
 
 }

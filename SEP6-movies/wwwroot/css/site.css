@@ -304,6 +304,44 @@ button:not(:disabled) {
     padding-bottom: 5px;
 }
 
+table{
+    border: 1px solid lightgray;
+}
+
+td{
+    border: 1px solid lightgray;
+    text-align: center;
+}
+
+th{
+    border: 1px solid lightgray;
+    text-align: center;
+
+}
+
+.card-text{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+#heart {
+    color: grey;
+    font-size: 50px;
+}
+
+#heart.red {
+    color: red;
+}
+
+.loadingText{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-style: italic;
+    color: gray;
+}
 /*Movies*/
 /*--------------------------------------------------------------------------------------------------*/
 .movieTitles{

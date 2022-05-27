@@ -171,7 +171,7 @@ namespace test_shit.Network
 
             return movies;
         }
-
+        
         public async Task<Actor> getActorFromApiWithImdbID(int actorID)
         {
             FindActorByID personResult = new FindActorByID();

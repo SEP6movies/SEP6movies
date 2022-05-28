@@ -14,7 +14,7 @@ COPY ["SEP6-movies.csproj", "./"]
 RUN dotnet restore "SEP6-movies.csproj"
 COPY . .
 WORKDIR "/src"
-RUN dotnet build "SEP6-movies.csproj" -c Release -o /app/build
+RUN dotnet build "SEP6-movies.csproj:latest" -c Release -o /app/build
 
 FROM build AS publish
 RUN dotnet publish "SEP6-movies.csproj" -c Release -o /app/publish

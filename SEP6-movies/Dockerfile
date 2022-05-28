@@ -16,6 +16,7 @@ COPY . .
 WORKDIR "/src"
 RUN dotnet build "SEP6-movies.csproj" -c Release -o /app/build
 
+TAG "SEP6-movies.csproj":latest
 FROM build AS publish
 RUN dotnet publish "SEP6-movies.csproj" -c Release -o /app/publish
 

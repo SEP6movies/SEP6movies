@@ -1,4 +1,0 @@
-cd SEP6-movies && docker build \
-    -t gcr.io/sep6-350412/github.com/sep6movies/sep6movies:$COMMIT_SHA:latest \
-    -f Dockerfile \
-    .

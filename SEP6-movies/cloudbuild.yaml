@@ -1,5 +1,0 @@
-# Deploy container image to Cloud Run
-steps:
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: gcloud
-  args: ['run', 'deploy', 'default-v0', '--image', 'gcr.io/sep6-350412/github.com/sep6movies/sep6movies/$COMMIT_SHA:latest', '--region', 'us-central1', '--platform', 'managed']

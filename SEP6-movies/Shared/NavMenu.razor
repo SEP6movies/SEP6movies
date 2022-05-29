@@ -1,4 +1,5 @@
 ﻿
+@inject IJSRuntime JSRuntime
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container">
         <a class="navbar-brand" href=""><img class="logoIcon" src="icons/icons8-movie-64.png"></a>
@@ -6,29 +7,26 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-             <ul class="navbar-nav">
-                 <li class="nav-item flex-grow-1">
-                     <form id="form"> 
-                         <input type="search" id="query" name="q" placeholder="Search...">
-                         <button>Search</button>
-                     </form>
-                 </li>
-                 <li class="nav-item flex-grow-1">
-                     <a class="navbar-brand" href="AdvancedSearch"><img class="advancedSearchIcon" alt="advanced search" src="icons/icons8-plus64.png"></a>
-                 </li>
-                 <div class="dropdown">
-                   <div class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     <img class="profileIcon" alt="user" src="icons/icons8-male-user-64.png">
-                   </div>
-                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                       <a class="dropdown-item" href="Profile">Profile</a>
-                       <a class="dropdown-item" href="FavoriteMovies">Favorites</a>
-                       <a class="dropdown-item" href="Friends">Friends</a>
-                       <div class="dropdown-divider"></div>
-                       <a class="dropdown-item" href="Settings">Settings</a>
-                   </div>
-                 </div>
-             </ul>
+            
+            <ul class="navbar-nav">
+                <li class="nav-item flex-grow-1">
+                    <a class="navbar-brand" href="AdvancedSearch"><img class="advancedSearchIcon" alt="advanced search" src="icons/icons8-plus64.png"></a>
+                </li>
+                <div class="dropdown">
+                    <div class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="profileIcon" alt="user" src="icons/icons8-male-user-64.png">
+                    </div>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="Profile">Profile</a>
+                        <a class="dropdown-item" href="FavoriteMovies">Favorites</a>
+                        <a class="dropdown-item" href="Friends">Friends</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="Settings">Settings</a>
+                    </div>
+                </div>
+            </ul>
+            
+            
             <ul class="navbar-nav flex-grow-1">
                 <li class="nav-item">
                     <NavLink class="nav-link text-dark" href="Movies" Match="NavLinkMatch.All">
@@ -45,7 +43,18 @@
                         <span aria-hidden="true"></span> <h5 class="navigation">Directors</h5>
                     </NavLink>
                 </li>
+                <li class="nav-item">
+                    <div class="cntr">
+                        <div class="cntr-innr">
+                            <label class="search" for="inpt_search">
+                                <input id="inpt_search" type="text" />
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                
             </ul>
+
 
         </div>
     </div>
@@ -63,7 +72,10 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
-
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSRuntime.InvokeVoidAsync("searchBar"); // NOTE: call JavaScript function
+    }
    
 
 }

@@ -60,7 +60,7 @@
                             }
                             else
                             {
-                                <p>@_movie.runtime </p>
+                                <p>@_movie.runtime minutes</p>
                             }
                         </div>
                     </div>
@@ -142,7 +142,7 @@
                 @foreach (var item in _cast)
                      {
                          <div class="col-md-2 favoriteMovies">
-                             <div class="card mb-4 box-shadow">
+                             <div class="card mb-4 box-shadow" style="outline: none;">
                                 @if (item.profile_path == "https://image.tmdb.org/t/p/original")
                                 {
                                     <img src="images/image1.png" style="width: 150px; height: 220px"/>
@@ -151,7 +151,7 @@
                                 else
                                 {
                                     <img src=@item.profile_path style="width: 150px"/>
-                                    <p class="card-text">@item.name</p>
+                                    <p class="card-text" style="padding: 5px">@item.name</p>
                                 }
                              </div>
                          </div>

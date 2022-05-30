@@ -3,6 +3,7 @@
 @using test_shit.Network
 @inject IJSRuntime JSRuntime
 @inject NetworkImpl _networkImpl
+@inject NavigationManager NavigationManager
  
  
 <div class="mainView">
@@ -17,36 +18,53 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                
                 <div class="container-fluid">
-                    
+                    @if (_aResults.Count==0)
+                                     {
+                                         <div class="spinner-border" role="status">
+                                             <span class="sr-only">Loading...</span>
+                                         </div>
+                                    
+                                     }
                     <div id="carousel-example1" class="carousel slide" data-interval="false" data-ride="carousel">
                         <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                            @foreach (var item in _aResults.Select((value, i)=> new {i,value}))
+
+                            @foreach (var item in _aResults.Select((value, i) => new { i, value }))
                             {
                                 var value = item.value;
                                 var index = item.i;
-                                if (index==0)
+
+                                if (index == 0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
-                                        <img src=@value.poster_path class="img-fluid" alt="" />
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
+                                        <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                             }
                         </div>
-                        <a class="carousel-control-prev" href="#carousel-example1" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carousel-example1" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                        @if (_aResults.Count==0)
+                        {
+                            
+                        }
+                        else
+                        {
+                            <a class="carousel-control-prev" href="#carousel-example1" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carousel-example1" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        }
+                        
                     </div>
                 </div>
             </div>
@@ -60,35 +78,49 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="container-fluid">
+                     @if (_cResults.Count==0)
+                                                     {
+                                                         <div class="spinner-border" role="status">
+                                                             <span class="sr-only">Loading...</span>
+                                                         </div>
+                                                    
+                                                     }
                     <div id="carousel-example2" class="carousel slide" data-interval="false" data-ride="carousel">
                         <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                            @foreach (var item in _cResults.Select((value, i)=> new {i,value}))
+                            @foreach (var item in _cResults.Select((value, i) => new { i, value }))
                             {
                                 var value = item.value;
                                 var index = item.i;
-                                if (index==0)
+                                if (index == 0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
-                                        <img src=@value.poster_path class="img-fluid" alt="" />
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
+                                        <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
-                                                            
+
                             }
                         </div>
-                        <a class="carousel-control-prev" href="#carousel-example2" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carousel-example2" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                       @if (_cResults.Count==0)
+                                               {
+                                                   
+                                               }
+                                               else
+                                               {
+                                                   <a class="carousel-control-prev" href="#carousel-example2" role="button" data-slide="prev">
+                                                       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                       <span class="sr-only">Previous</span>
+                                                   </a>
+                                                   <a class="carousel-control-next" href="#carousel-example2" role="button" data-slide="next">
+                                                       <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                       <span class="sr-only">Next</span>
+                                                   </a>
+                                               }
                     </div>
                 </div>
             </div>
@@ -101,36 +133,51 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                 
                 <div class="container-fluid">
+                    @if (_crResults.Count==0)
+                                                     {
+                                                         <div class="spinner-border" role="status">
+                                                             <span class="sr-only">Loading...</span>
+                                                         </div>
+                                                    
+                                                     }
                     <div id="carousel-example3" class="carousel slide" data-interval="false" data-ride="carousel">
                         <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                            @foreach (var item in _crResults.Select((value, i)=> new {i,value}))
+                            @foreach (var item in _crResults.Select((value, i) => new { i, value }))
                             {
                                 var value = item.value;
                                 var index = item.i;
-                                if (index==0)
+                                if (index == 0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
-                                        <img src=@value.poster_path class="img-fluid" alt="" />
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
+                                        <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                             }
-                           
+
                         </div>
-                        <a class="carousel-control-prev" href="#carousel-example3" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carousel-example3" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                        @if (_crResults.Count==0)
+                                                {
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    <a class="carousel-control-prev" href="#carousel-example3" role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carousel-example3" role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                }
                     </div>
                 </div>
             </div>
@@ -145,35 +192,49 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="container-fluid">
+                    @if (_dResults.Count==0)
+                                     {
+                                         <div class="spinner-border" role="status">
+                                             <span class="sr-only">Loading...</span>
+                                         </div>
+                                    
+                                     }
                     <div id="carousel-example4" class="carousel slide" data-interval="false" data-ride="carousel">
                         <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                            @foreach (var item in _dResults.Select((value, i)=> new {i,value}))
+                            @foreach (var item in _dResults.Select((value, i) => new { i, value }))
                             {
                                 var value = item.value;
                                 var index = item.i;
-                                if (index==0)
+                                if (index == 0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
-                                        <img src=@value.poster_path class="img-fluid" alt="" />
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
+                                        <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                             }
-                                          
+
                         </div>
-                        <a class="carousel-control-prev" href="#carousel-example4" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carousel-example4" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                        @if (_dResults.Count==0)
+                                                {
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    <a class="carousel-control-prev" href="#carousel-example4" role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carousel-example4" role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                }
                     </div>
                 </div>
             </div>
@@ -188,35 +249,49 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="container-fluid">
+                    @if (_fResults.Count==0)
+                                     {
+                                         <div class="spinner-border" role="status">
+                                             <span class="sr-only">Loading...</span>
+                                         </div>
+                                    
+                                     }
                     <div id="carousel-example5" class="carousel slide" data-interval="false" data-ride="carousel">
                         <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                            @foreach (var item in _fResults.Select((value, i)=> new {i,value}))
+                            @foreach (var item in _fResults.Select((value, i) => new { i, value }))
                             {
                                 var value = item.value;
                                 var index = item.i;
-                                if (index==0)
+                                if (index == 0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
-                                        <img src=@value.poster_path class="img-fluid" alt="" />
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
+                                        <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                             }
-                                                      
+
                         </div>
-                        <a class="carousel-control-prev" href="#carousel-example5" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carousel-example5" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                        @if (_fResults.Count==0)
+                                                {
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    <a class="carousel-control-prev" href="#carousel-example5" role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carousel-example5" role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                }
                     </div>
                 </div>
             </div>
@@ -231,35 +306,49 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="container-fluid">
+                    @if (_hResults.Count==0)
+                                     {
+                                         <div class="spinner-border" role="status">
+                                             <span class="sr-only">Loading...</span>
+                                         </div>
+                                    
+                                     }
                     <div id="carousel-example6" class="carousel slide" data-interval="false" data-ride="carousel">
                         <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                            @foreach (var item in _hResults.Select((value, i)=> new {i,value}))
+                            @foreach (var item in _hResults.Select((value, i) => new { i, value }))
                             {
                                 var value = item.value;
                                 var index = item.i;
-                                if (index==0)
+                                if (index == 0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
-                                        <img src=@value.poster_path class="img-fluid" alt="" />
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
+                                        <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                             }
-                                                                  
+
                         </div>
-                        <a class="carousel-control-prev" href="#carousel-example6" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carousel-example6" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                        @if (_hResults.Count==0)
+                                                {
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    <a class="carousel-control-prev" href="#carousel-example6" role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carousel-example6" role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                }
                     </div>
                 </div>
             </div>
@@ -274,35 +363,49 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="container-fluid">
+                    @if (_rResults.Count==0)
+                                     {
+                                         <div class="spinner-border" role="status">
+                                             <span class="sr-only">Loading...</span>
+                                         </div>
+                                    
+                                     }
                     <div id="carousel-example7" class="carousel slide" data-interval="false" data-ride="carousel">
                         <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                            @foreach (var item in _rResults.Select((value, i)=> new {i,value}))
+                            @foreach (var item in _rResults.Select((value, i) => new { i, value }))
                             {
                                 var value = item.value;
                                 var index = item.i;
-                                if (index==0)
+                                if (index == 0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
-                                        <img src=@value.poster_path class="img-fluid" alt="" />
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
+                                        <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                             }
-                                                                  
+
                         </div>
-                        <a class="carousel-control-prev" href="#carousel-example7" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carousel-example7" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                       @if (_rResults.Count==0)
+                                               {
+                                                   
+                                               }
+                                               else
+                                               {
+                                                   <a class="carousel-control-prev" href="#carousel-example7" role="button" data-slide="prev">
+                                                       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                       <span class="sr-only">Previous</span>
+                                                   </a>
+                                                   <a class="carousel-control-next" href="#carousel-example7" role="button" data-slide="next">
+                                                       <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                       <span class="sr-only">Next</span>
+                                                   </a>
+                                               }
                     </div>
                 </div>
             </div>
@@ -317,35 +420,49 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="container-fluid">
+                    @if (_sResults.Count==0)
+                                     {
+                                         <div class="spinner-border" role="status">
+                                             <span class="sr-only">Loading...</span>
+                                         </div>
+                                    
+                                     }
                     <div id="carousel-example8" class="carousel slide" data-interval="false" data-ride="carousel">
                         <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                            @foreach (var item in _sResults.Select((value, i)=> new {i,value}))
+                            @foreach (var item in _sResults.Select((value, i) => new { i, value }))
                             {
                                 var value = item.value;
                                 var index = item.i;
-                                if (index==0)
+                                if (index == 0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
-                                        <img src=@value.poster_path class="img-fluid" alt="" />
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
+                                        <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                             }
-                                                                              
+
                         </div>
-                        <a class="carousel-control-prev" href="#carousel-example8" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carousel-example8" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                        @if (_sResults.Count==0)
+                                                {
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    <a class="carousel-control-prev" href="#carousel-example8" role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carousel-example8" role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                }
                     </div>
                 </div>
             </div>
@@ -360,35 +477,49 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="container-fluid">
+                    @if (_tResults.Count==0)
+                                     {
+                                         <div class="spinner-border" role="status">
+                                             <span class="sr-only">Loading...</span>
+                                         </div>
+                                    
+                                     }
                     <div id="carousel-example9" class="carousel slide" data-interval="false" data-ride="carousel">
                         <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                            @foreach (var item in _tResults.Select((value, i)=> new {i,value}))
+                            @foreach (var item in _tResults.Select((value, i) => new { i, value }))
                             {
                                 var value = item.value;
                                 var index = item.i;
-                                if (index==0)
+                                if (index == 0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
-                                        <img src=@value.poster_path class="img-fluid" alt="" />
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
+                                        <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                             }
-                                                                              
+
                         </div>
-                        <a class="carousel-control-prev" href="#carousel-example9" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carousel-example9" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                        @if (_tResults.Count==0)
+                                                {
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    <a class="carousel-control-prev" href="#carousel-example9" role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carousel-example9" role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                }
                     </div>
                 </div>
             </div>
@@ -403,35 +534,49 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="container-fluid">
+                    @if (_hiResults.Count==0)
+                                     {
+                                         <div class="spinner-border" role="status">
+                                             <span class="sr-only">Loading...</span>
+                                         </div>
+                                    
+                                     }
                     <div id="carousel-example10" class="carousel slide" data-interval="false" data-ride="carousel">
                         <div class="carousel-inner row w-100 mx-auto" role="listbox">
-                            @foreach (var item in _hiResults.Select((value, i)=> new {i,value}))
+                            @foreach (var item in _hiResults.Select((value, i) => new { i, value }))
                             {
                                 var value = item.value;
                                 var index = item.i;
-                                if (index==0)
+                                if (index == 0)
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
-                                        <img src=@value.poster_path class="img-fluid" alt="" />
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active" @onclick="@(e => ToMovieDetails(item.value))">
+                                        <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                                 else
                                 {
-                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3" @onclick="@(e => ToMovieDetails(item.value))">
                                         <img src=@value.poster_path class="img-fluid" alt=""/>
                                     </div>
                                 }
                             }
-                                                                              
+
                         </div>
-                        <a class="carousel-control-prev" href="#carousel-example10" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carousel-example10" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
+                        @if (_hiResults.Count==0)
+                                                {
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    <a class="carousel-control-prev" href="#carousel-example10" role="button" data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carousel-example10" role="button" data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                }
                     </div>
                 </div>
             </div>
@@ -477,6 +622,11 @@
 
     string SearchTerm { get; set; } = "";
     
+    private void ToMovieDetails(TopRated.Result movie)
+    {
+        NavigationManager.NavigateTo($"/SelectedMovie/{movie.id}");
+        
+    }
     
     protected override async Task OnInitializedAsync()
     {

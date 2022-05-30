@@ -2,13 +2,11 @@
 @using test_shit.Network
 @using test_shit.Data
 @inject NetworkImpl _networkImpl
+@inject NavigationManager NavigationManager
+
 <div class="mainView">
     <div class="container">
-        <div class="row">
-            <h4>Movies</h4>
-        </div>
-        
-        <div class="row favoriteMovies">
+        @*<div class="row favoriteMovies">
             <div class="col-md-1 filterMovies">
                 <form action="#">
                     <select name="languages" id="lang" type="button" class="dropdownSelect">
@@ -84,21 +82,36 @@
                 <input type="reset" class="resetFiltersButton"/>
             </div>
 
-        </div>
+        </div>*@
         <div class="row">
             @if (!_movies.Any())
             {
-                <p>Loading...</p>
+                <div class="col-md-12 loadingText">
+                    Loading...
+                </div>
             }
             else
             {
                 @foreach (var item in _movies)
                 {
-                    <div class="col-md-3 favoriteMovies">
-                        <img src=@item.poster_path alt="" style="width: 300px"/>
-                    </div>
+                    @if (@item.title != null)
+                    {
+                        <div class="col-md-3 favoriteMovies">
+                            <div class="card mb-4 box-shadow">
+                                @if (@item.poster_path == emptyPath || @item.poster_path == null)
+                                {
+                                    <img src="images/image1.png" style="width: 280px; height: 420px;" @onclick="@(() => ToMovieDetails(item))"/>
+                                    <p class="card-text">@item.title</p>
+                                }
+                                else
+                                {
+                                    <img src=@item.poster_path style="width: 280px" @onclick="@(() => ToMovieDetails(item))"/>
+                                    <p class="card-text">@item.title</p>
+                                }
+                            </div>
+                        </div>
+                    }
                 }
-                <div>done</div>
             }
         </div>
     </div>
@@ -106,8 +119,14 @@
 
 @code {
     private List<Movie> _movies = new List<Movie>();
-    string SearchTerm { get; set; } = "";
-    
+    private string emptyPath = "https://image.tmdb.org/t/p/original";
+    /*
+    public string SearchText { get; set; } = "";
+    List<Movie> _searchedMovies = _movies.Where(i => i.title.ToLower().Contains(SearchText.ToLower())).ToList();
+    */
+
+
+
     protected override async Task OnInitializedAsync()
     {
         try
@@ -119,7 +138,19 @@
             Console.WriteLine("it fucked here");
             Console.WriteLine(e);
         }
+
+        foreach (var item in _movies)
+        {
+            Console.WriteLine(item.poster_path + ", ");
+        }
     }
 
+    private void ToMovieDetails(Movie movie)
+    {
+        NavigationManager.NavigateTo($"/SelectedMovie/{movie.id}");
+        Console.WriteLine("we gooooooo for " + movie.imdb_id + "   " + movie.id);
+    }
+
+    
 
 }

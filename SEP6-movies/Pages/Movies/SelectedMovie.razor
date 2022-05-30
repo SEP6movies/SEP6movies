@@ -1,104 +1,248 @@
-@page "/SelectedMovie"
+@page "/SelectedMovie/{id:int}"
+@using test_shit.Data
+@using test_shit.Network
+
+@using System.Net.Mime
+@inject NetworkImpl _networkImpl
+
 
 <div class="mainView">
     <div class="container">
         <div class="row">
-            <div class="col-md-3"><img src="test-images/test-image-1.jpeg" alt="testImages" style="width: 300px; padding-right:30px"></div>
-            <div class="col-md-9">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-2">
-                        <label>Title</label>
-                    </div>
-                    <div class="col-md-10">
-                        <p>ahahahhaha </p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-2">
-                        <label>Genre</label>
-                    </div>
-                    <div class="col-md-10">
-                        <p>ahahahhaha </p>
+            <div class="col-md-3"><img src=@_movie.poster_path alt="testImages" style="width: 300px; padding-right:30px"></div>
+            <div class="col-md-6">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Title</label>
+                        </div>
+                        <div class="col-md-10">
+                            @if (_movie.title==null)
+                            {
+                                <p>Unknown</p>
+                            }
+                            else
+                            {
+                                <p>@_movie.title </p>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-2">
-                        <label>Runtime</label>
-                    </div>
-                    <div class="col-md-10">
-                        <p>ahahahhaha </p>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Genre</label>
+                        </div>
+                        <div class="col-md-10">
+                            @if (!_genres.Any())
+                                 {
+                                     <p>Unknown</p>
+                                 }
+                                 else
+                                 {
+                                    @foreach (var item in _genres)
+                                    {
+                                        <span>@item </span>
+                                    }                                                    
+                                 }
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-2">
-                        <label>Year</label>
-                    </div>
-                    <div class="col-md-10">
-                        <p>ahahahhaha </p>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Runtime</label>
+                        </div>
+                        <div class="col-md-10">
+                            @if (_movie.runtime==0)
+                            {
+                                <p>Unknown</p>
+                            }
+                            else
+                            {
+                                <p>@_movie.runtime minutes</p>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Year</label>
+                        </div>
+                        <div class="col-md-10">
+                            @if (_movie.release_date == null)
+                            {
+                                <p>Unknown</p>
+                            }
+                            else
+                            {
+                                <p>@_movie.release_date </p>
+                            }
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-2">
                             <label>Rating</label>
                         </div>
                         <div class="col-md-10">
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
+                            @if (_movie.vote_average==0)
+                            {
+                                <p>Unknown</p>
+                            }
+                            else
+                            {
+                                <p>@_movie.vote_average / 10</p>
+                            }                           
+                            
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12 movieDescription">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ultrices ipsum eget lacinia pharetra. Aenean volutpat hendrerit ex, interdum luctus dui mattis in. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur ultricies cursus arcu, vitae pulvinar urna commodo sed. Donec pretium lobortis laoreet. Integer scelerisque magna nulla, non lacinia metus mattis non. Proin sit amet tellus justo. Phasellus pellentesque hendrerit augue, id venenatis nulla hendrerit quis. Etiam pulvinar lectus a neque pretium, ut facilisis leo sodales.
-                    Duis molestie, elit eget tempus finibus, ex ipsum rutrum odio, eget posuere sem tellus sit amet augue. Morbi sit amet est velit. Sed diam ante, iaculis eu urna nec, gravida auctor nunc. Nunc nec pulvinar lectus. Quisque sem odio, sollicitudin nec luctus ut, pharetra vel est. Integer vitae ex ipsum. 
+                    <div class="row">
+                        <div class="col-md-12">Description</div>
+                    </div>
+                    <div class="row">
+                            @if (_movie.overview == null)
+                            {
+                                <p>Unknown</p>
+                            }
+                            else
+                            {
+                                <div class="col-md-12">@_movie.overview</div>
+                            }
+                    </div>
                 </div>
 
             </div>
+            <div class="col-md-3">
+                <i class="fa fa-heart" id="heart" ></i>
+            </div>
         </div>
         <div class="row">
-            <div class="col-md-1">
-                <h4>Director</h4>
+            <div class="col-md-12 topCastLabel">
+                <h4>Crew</h4>
             </div>
-            <div class="col-md-11">
-                <p>ahahaha</p>
+            <div class="row">
+                @foreach (var item in _crew)
+                {
+                    <p>@item.name,@emptySpace</p>
+                }
             </div>
         </div>
         
-        <div class="row">
-            <div class="col-md-1">
-                <h4>Writer</h4>
-            </div>
-            <div class="col-md-11">
-                <p>ahahaha</p>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-12 topCastLabel">
                 <h4>Top Cast</h4>
             </div>
-            <div class="col-md-12">
-                <p>///////////////////////////////////////////////////////////////////// image slider here/////////////////////////////////////////////////////////////</p>
+            <div class="row">
+                @foreach (var item in _cast)
+                     {
+                         <div class="col-md-2 favoriteMovies">
+                             <div class="card mb-4 box-shadow" style="outline: none;">
+                                @if (item.profile_path == "https://image.tmdb.org/t/p/original")
+                                {
+                                    <img src="images/image1.png" style="width: 150px; height: 220px"/>
+                                    <p class="card-text">@item.name</p>
+                                }
+                                else
+                                {
+                                    <img src=@item.profile_path style="width: 150px"/>
+                                    <p class="card-text" style="padding: 5px">@item.name</p>
+                                }
+                             </div>
+                         </div>
+                     }
             </div>
         </div>
         
         <div class="row">
-            <div class="col-md-5 stats">
-                <h2>Stats...</h2> 
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ultrices ipsum eget lacinia pharetra. Aenean volutpat hendrerit ex, interdum luctus dui mattis in. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur ultricies cursus arcu, vitae pulvinar urna commodo sed. Donec pretium lobortis laoreet. Integer scelerisque magna nulla, non lacinia metus mattis non. Proin sit amet tellus justo. Phasellus pellentesque hendrerit augue, id venenatis nulla hendrerit quis. Etiam pulvinar lectus a neque pretium, ut facilisis leo sodales.
+            <div class="col-md-5">
+                <h2>Stats</h2> 
             </div>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Budget</label>
+                    </div>
+                    <div class="col-md-11">
+                        <p>$@_movie.budget</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Popularity</label>
+                    </div>
+                    <div class="col-md-11">
+                        <p>@_movie.popularity</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Revenue</label>
+                    </div>
+                    <div class="col-md-11">
+                        <p>$@_movie.revenue</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Tagline</label>
+                    </div>
+                    <div class="col-md-11">
+                        <p>@_movie.tagline</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Vote count</label>
+                    </div>
+                    <div class="col-md-11">
+                        <p>@_movie.vote_count</p>
+                    </div>
+                </div>
+            </div>
+            
         </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Production company</h2> 
+                <div>
+                    <table>
+                        <tr>
+                            <th>Logo</th>
+                            <th>Name</th>
+                            <th>Country</th>
+                        </tr>
+                    @foreach (var item in _productionCompanies)
+                    {
+                        <tr>
+                            <td><img src=@item.logo_path></td>
+                            <td>@item.name</td>
+                            <td>@item.origin_country</td>
+                        </tr>
+                    }
+                    </table>
+                </div>
+                </div>
+        </div>
+        
         
         <div class="row">
             <div class="col-md-12 comments">
@@ -114,5 +258,49 @@
 </div>
 
 @code {
+    [Parameter]
+    public int id { get; set; }
+
+    private Movie _movie = new Movie();
+    private Credits _credits = new Credits();
+    private List<string> _genres = new List<string>();
+    private List<Credits.Cast> _cast = new List<Credits.Cast>();
+    private List<Credits.Crew> _crew = new List<Credits.Crew>();
+    
+    private List<Movie.ProductionCompany> _productionCompanies = new List<Movie.ProductionCompany>();
+
+    private string emptySpace = " ";
+   
+
+    protected override async Task OnInitializedAsync()
+    {
+        _movie = await _networkImpl.getMovieFromApiWithApiIds(id);
+        _credits = await _networkImpl.getCreditsFromApi(id);
+
+        foreach (var item in _movie.genres)
+        {
+            _genres.Add(item.name);
+        }
+
+        foreach (var item in _credits.cast)
+        {
+            _cast.Add(item);
+        }
+
+        foreach (var item in _credits.crew)
+        {
+            _crew.Add(item);
+        }
+
+        foreach (var item in _movie.production_companies)
+        {
+            _productionCompanies.Add(item);
+        }
+        
+        
+    }
+    
+    
+    
     
 }

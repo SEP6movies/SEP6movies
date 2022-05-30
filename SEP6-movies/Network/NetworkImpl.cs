@@ -32,7 +32,11 @@ namespace test_shit.Network
 
             
             Console.WriteLine("her");
-            Actor actor = new Actor();
+            
+            /*Changed here*/
+            /*Actor actor = new Actor();*/
+            PopularActors.Result actor = new PopularActors.Result();
+
             Credits credits = new Credits();
             PopularActors popularActors = new PopularActors();
             popularActors = await getPopularActors();
@@ -196,6 +200,25 @@ namespace test_shit.Network
 
             return actor;
         }
+        
+        public async Task<PopularActors.Result> getActorFromApi(int actorID)
+        {
+            //The ID that tmdb uses is different from imdb so therefore this method should only be used if the actorID
+            //comes from one of the other methods such as getCredits
+            PopularActors.Result actor = new PopularActors.Result();
+            HttpResponseMessage responseMessage = await client.GetAsync(
+                "https://api.themoviedb.org/3/person/"+actorID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                actor = await responseMessage.Content.ReadAsAsync<PopularActors.Result>();
+                actor.profile_path = "https://image.tmdb.org/t/p/original" + actor.profile_path;
+            }
+
+
+            return actor;
+        }
+        
+        /*
         public async Task<Actor> getActorFromApi(int actorID)
         {
            //The ID that tmdb uses is different from imdb so therefore this method should only be used if the actorID
@@ -212,6 +235,7 @@ namespace test_shit.Network
 
             return actor;
         }
+        */
 
         private string calculateTrueID(int ID)
         {
@@ -325,7 +349,7 @@ namespace test_shit.Network
                 
                 while (dataReader.Read())
                 {
-                    movieFavoritesIDs.Add(dataReader.GetString(1));
+                    movieFavoritesIDs.Add(dataReader.GetString(0));
                 }
         
                 dataReader.Close();
@@ -344,7 +368,7 @@ namespace test_shit.Network
             return movieFavoritesIDs;
         }
         
-       
+        
         public async Task<PopularActors> getPopularActors()
         {
             PopularActors popularActors = new PopularActors();
@@ -394,7 +418,7 @@ namespace test_shit.Network
             }
         }
         
-        public void addUserToDB(User user)
+              public void addUserToDB(User user)
         {
             try
             {

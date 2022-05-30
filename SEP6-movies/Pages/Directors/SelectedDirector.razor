@@ -1,0 +1,139 @@
+@page "/SelectedDirector/{id:int}/{movieId:int}"
+@using test_shit.Network
+@using test_shit.Data
+@inject NetworkImpl _networkImpl
+
+
+<div class="mainView">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 nameTag movieTitles">
+                <h4>@_director.name</h4>
+            </div>
+            </div>
+        <div class="row">
+            <div class="col-md-2">
+                 @if (_director.profile_path == emptyPath || _director.profile_path == null)
+                                                {
+                                                    <img src="images/image1.png" style="width: 200px; height: 300px;"/>
+                                                }
+                                                else
+                                                {
+                                                    <img src=@_director.profile_path alt="testImages" style="width: 200px; padding-right:30px"/>
+                                                }
+            </div>
+            <div class="col-md-6">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Original name</label>
+                        </div>
+                        <div class="col-md-9">
+                            <p>@_director.original_name</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Gender</label>
+                        </div>
+                        <div class="col-md-9">
+                            <p>@_gender </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Known for</label>
+                        </div>
+                        <div class="col-md-9">
+                            <p>@_director.known_for_department </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Average rating</label>
+                        </div>
+                        <div class="col-md-9">
+                            <p>@_director.popularity</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Department</label>
+                        </div>
+                        <div class="col-md-9">
+                            <p>@_director.department</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Job</label>
+                        </div>
+                        <div class="col-md-9">
+                            <p>@_director.job</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+    
+    [Parameter]
+    public int movieId { get; set; }
+
+    public Credits.Crew _director = new Credits.Crew();
+    public Credits _credits = new Credits();
+
+    private string _gender = String.Empty;
+    private string emptyPath = "https://image.tmdb.org/t/p/original";
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _credits = await _networkImpl.getCreditsFromApi(movieId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        foreach (var item in _credits.crew)
+        {
+            if (item.id == id)
+            {
+                _director = item;
+            }
+        }
+
+        Console.WriteLine(_director.name);
+        
+        if (_director.gender == 1)
+        {
+            _gender = "Female";
+        }
+        else
+        {
+            _gender = "Male";
+        }
+    }
+
+}

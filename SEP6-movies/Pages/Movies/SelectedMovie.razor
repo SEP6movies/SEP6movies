@@ -1,33 +1,35 @@
 @page "/SelectedMovie/{id:int}"
 @using test_shit.Data
 @using test_shit.Network
-
+@inject IJSRuntime JSRuntime
 @using System.Net.Mime
 @inject NetworkImpl _networkImpl
+@inject NavigationManager NavigationManager
 
 
 <div class="mainView">
     <div class="container">
-        <div class="row">
-            <div class="col-md-3"><img src=@_movie.poster_path alt="testImages" style="width: 300px; padding-right:30px"></div>
-            <div class="col-md-6">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <label>Title</label>
-                        </div>
-                        <div class="col-md-10">
-                            @if (_movie.title==null)
-                            {
-                                <p>Unknown</p>
-                            }
-                            else
-                            {
-                                <p>@_movie.title </p>
-                            }
-                        </div>
-                    </div>
+    <div class="row">
+                <div class="col-md-12 nameTag movieTitles">
+                    <h3>@_movie.title</h3>
                 </div>
+                </div>
+        <div class="row">
+            <div class="col-md-3">
+                @if (_movie.poster_path == emptyPath || _movie.poster_path == null)
+                {
+                    <img src="images/image1.png" style="width: 280px; height: 420px;"/>
+                }
+                else
+                {
+                    <img src=@_movie.poster_path alt="testImages" style="width: 300px; padding-right:30px"/>
+                }
+            </div>
+            <div class="col-md-9">
+                
+                        <div class="col-md-12 favoriteButton" type="button" @onclick="AddToFavorites">
+                            <i class="fa fa-heart" id="heart" ></i>
+                        </div>
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-2">
@@ -35,16 +37,16 @@
                         </div>
                         <div class="col-md-10">
                             @if (!_genres.Any())
-                                 {
-                                     <p>Unknown</p>
-                                 }
-                                 else
-                                 {
-                                    @foreach (var item in _genres)
-                                    {
-                                        <span>@item </span>
-                                    }                                                    
-                                 }
+                            {
+                                <p>Unknown</p>
+                            }
+                            else
+                            {
+                                @foreach (var item in _genres)
+                                {
+                                    <span>@item </span>
+                                }
+                            }
                         </div>
                     </div>
                 </div>
@@ -54,7 +56,7 @@
                             <label>Runtime</label>
                         </div>
                         <div class="col-md-10">
-                            @if (_movie.runtime==0)
+                            @if (_movie.runtime == 0)
                             {
                                 <p>Unknown</p>
                             }
@@ -68,7 +70,7 @@
                 <div class="col-md-12">
                     <div class="row">
                         <div class="col-md-2">
-                            <label>Year</label>
+                            <label>Date</label>
                         </div>
                         <div class="col-md-10">
                             @if (_movie.release_date == null)
@@ -88,74 +90,194 @@
                             <label>Rating</label>
                         </div>
                         <div class="col-md-10">
-                            @if (_movie.vote_average==0)
+                            @if (_movie.vote_average == 0)
                             {
                                 <p>Unknown</p>
                             }
                             else
                             {
                                 <p>@_movie.vote_average / 10</p>
-                            }                           
-                            
+                            }
+
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12 movieDescription">
                     <div class="row">
-                        <div class="col-md-12">Description</div>
+                        <div class="col-md-12">
+                            <label>Description</label>
+                        </div>
                     </div>
                     <div class="row">
-                            @if (_movie.overview == null)
-                            {
-                                <p>Unknown</p>
-                            }
-                            else
-                            {
-                                <div class="col-md-12">@_movie.overview</div>
-                            }
+                        @if (_movie.overview == null)
+                        {
+                            <p>Unknown</p>
+                        }
+                        else
+                        {
+                            <div class="col-md-12">@_movie.overview</div>
+                        }
                     </div>
                 </div>
 
             </div>
-            <div class="col-md-3">
-                <i class="fa fa-heart" id="heart" ></i>
-            </div>
         </div>
         <div class="row">
-            <div class="col-md-12 topCastLabel">
-                <h4>Crew</h4>
+            <div class="col-md-12 topCastLabel movieTitles">
+                <h3>Crew</h3>
             </div>
+            
             <div class="row">
-                @foreach (var item in _crew)
-                {
-                    <p>@item.name,@emptySpace</p>
-                }
-            </div>
+                            <div class="col-md-12">
+                                <div class="container-fluid">
+                                    <div id="carousel-example2" class="carousel slide" data-interval="false" data-ride="carousel">
+                                        <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                                            @foreach (var item in _crew.Select((value, i) => new { i, value }))
+                                            {
+                                                var value = item.value;
+                                                var index = item.i;
+            
+                                                if (index == 0)
+                                                {
+            
+                                                    @if (value.profile_path == "https://image.tmdb.org/t/p/original")
+                                                    {
+                                                        <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+                                                            <p class="card-text jobTitle">@value.job</p>
+                                                            <img src="images/image1.png" style="width: 200px; height: 300px" type="button" @onclick="() => ToDirectorDetails(item.value)"/>
+                                                            <p class="card-text">@value.name</p>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+                                                            <p class="card-text jobTitle">@value.job</p>
+                                                            <img src=@value.profile_path style="width: 200px"  type="button" @onclick="() => ToDirectorDetails(item.value)"/>
+                                                            <p class="card-text" style="padding: 5px">@value.name</p>
+                                                        </div>
+                                                    }
+                                                }
+            
+                                                else
+                                                {
+                                                    @if (value.profile_path == "https://image.tmdb.org/t/p/original")
+                                                    {
+                                                        <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                                            <p class="card-text jobTitle">@value.job</p>
+                                                            <img src="images/image1.png" style="width: 200px; height: 300px" type="button" @onclick="() => ToDirectorDetails(item.value)"/>
+                                                            <p class="card-text">@value.name</p>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+                                                            <p class="card-text jobTitle">@value.job</p>
+                                                            <img src=@value.profile_path style="width: 200px"  type="button" @onclick="() => ToDirectorDetails(item.value)"/>
+                                                            <p class="card-text" style="padding: 5px">@value.name</p>
+                                                        </div>
+                                                    }
+                                                }
+                                            }
+                                        </div>
+                                        
+                                        @if (_cast.Count == 0)
+                                        {
+                                        }
+                                        else
+                                        {
+                                            <a class="carousel-control-prev" href="#carousel-example2" role="button" data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carousel-example2" role="button" data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        }
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
         </div>
         
 
         <div class="row">
-            <div class="col-md-12 topCastLabel">
-                <h4>Top Cast</h4>
+            <div class="col-md-12 topCastLabel movieTitles">
+                <h3>Top Cast</h3>
             </div>
+            
             <div class="row">
-                @foreach (var item in _cast)
-                     {
-                         <div class="col-md-2 favoriteMovies">
-                             <div class="card mb-4 box-shadow" style="outline: none;">
-                                @if (item.profile_path == "https://image.tmdb.org/t/p/original")
+                <div class="col-md-12">
+                    <div class="container-fluid">
+                        <div id="carousel-example10" class="carousel slide" data-interval="false" data-ride="carousel">
+                            <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                                @foreach (var item in _cast.Select((value, i) => new { i, value }))
                                 {
-                                    <img src="images/image1.png" style="width: 150px; height: 220px"/>
-                                    <p class="card-text">@item.name</p>
+                                    var value = item.value;
+                                    var index = item.i;
+
+                                    if (index == 0)
+                                    {
+
+                                        @if (value.profile_path == "https://image.tmdb.org/t/p/original")
+                                        {
+                                            <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+
+                                                <img src="images/image1.png" style="width: 200px; height: 300px" type="button" @onclick="()=> ToActorDetails(item.value)" />
+                                                <p class="card-text">@value.name</p>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3 active">
+
+                                                <img src=@value.profile_path style="width: 200px"  type="button" @onclick="()=> ToActorDetails(item.value)"/>
+                                                <p class="card-text" style="padding: 5px">@value.name</p>
+                                            </div>
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        @if (value.profile_path == "https://image.tmdb.org/t/p/original")
+                                        {
+                                            <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+
+                                                <img src="images/image1.png" style="width: 200px; height: 300px"  type="button" @onclick="()=> ToActorDetails(item.value)"/>
+                                                <p class="card-text">@value.name</p>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="carousel-item col-12 col-sm-6 col-md-4 col-lg-3">
+
+                                                <img src=@value.profile_path style="width: 200px"  type="button" @onclick="()=> ToActorDetails(item.value)"/>
+                                                <p class="card-text" style="padding: 5px">@value.name</p>
+                                            </div>
+                                        }
+                                    }
                                 }
-                                else
-                                {
-                                    <img src=@item.profile_path style="width: 150px"/>
-                                    <p class="card-text" style="padding: 5px">@item.name</p>
-                                }
-                             </div>
-                         </div>
-                     }
+                            </div>
+                            
+                            @if (_cast.Count == 0)
+                            {
+                            }
+                            else
+                            {
+                                <a class="carousel-control-prev" href="#carousel-example10" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carousel-example10" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            }
+                        </div>
+                        
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -168,9 +290,18 @@
                     <div class="col-md-1">
                         <label>Budget</label>
                     </div>
-                    <div class="col-md-11">
-                        <p>$@_movie.budget</p>
-                    </div>
+                    @if (_movie.budget == 0)
+                    {
+                        <div class="col-md-11">
+                            <p>Unknown</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-11">
+                            <p>@_movie.budget</p>
+                        </div>
+                    }
                 </div>
             </div>
             
@@ -179,9 +310,19 @@
                     <div class="col-md-1">
                         <label>Popularity</label>
                     </div>
-                    <div class="col-md-11">
-                        <p>@_movie.popularity</p>
-                    </div>
+                     @if (_movie.popularity == 0)
+                     {
+                         <div class="col-md-11">
+                             <p>Unknown</p>
+                             </div>
+                     }
+                     else
+                     {
+                         <div class="col-md-11">
+                             <p>@_movie.popularity</p>
+                         </div>
+                     }
+                    
                 </div>
             </div>
             
@@ -190,9 +331,18 @@
                     <div class="col-md-1">
                         <label>Revenue</label>
                     </div>
-                    <div class="col-md-11">
-                        <p>$@_movie.revenue</p>
-                    </div>
+                     @if (_movie.revenue == 0)
+                     {
+                         <div class="col-md-11">
+                             <p>Unknown</p>
+                             </div>
+                     }
+                     else
+                     {
+                         <div class="col-md-11">
+                             <p>$@_movie.revenue</p>
+                         </div>
+                     }
                 </div>
             </div>
             
@@ -201,9 +351,18 @@
                     <div class="col-md-1">
                         <label>Tagline</label>
                     </div>
-                    <div class="col-md-11">
-                        <p>@_movie.tagline</p>
-                    </div>
+                    @if (_movie.tagline == null)
+                    {
+                        <div class="col-md-11">
+                            <p>Unknown</p>
+                            </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-11">
+                            <p>@_movie.tagline</p>
+                        </div>
+                    }
                 </div>
             </div>
             
@@ -212,9 +371,19 @@
                     <div class="col-md-1">
                         <label>Vote count</label>
                     </div>
-                    <div class="col-md-11">
-                        <p>@_movie.vote_count</p>
-                    </div>
+                    
+                    @if (_movie.vote_count == 0)
+                    {
+                        <div class="col-md-11">
+                            <p>Unknown</p>
+                            </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-11">
+                            <p>@_movie.vote_count</p>
+                        </div>
+                    }
                 </div>
             </div>
             
@@ -270,6 +439,8 @@
     private List<Movie.ProductionCompany> _productionCompanies = new List<Movie.ProductionCompany>();
 
     private string emptySpace = " ";
+    private string emptyPath = "https://image.tmdb.org/t/p/original";
+
    
 
     protected override async Task OnInitializedAsync()
@@ -299,8 +470,26 @@
         
         
     }
+
+    public void AddToFavorites()
+    {
+        _networkImpl.addMovieToFavorites(1, _movie.imdb_id);
+    }
     
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await JSRuntime.InvokeVoidAsync("startCarousels"); // NOTE: call JavaScript function
+    }
     
+    private void ToActorDetails(Credits.Cast actor)
+    {
+        NavigationManager.NavigateTo($"/SelectedActor/{actor.id}");
+    }
+    
+    private void ToDirectorDetails(Credits.Crew director)
+    {
+        NavigationManager.NavigateTo($"/SelectedDirector/{director.id}/{_movie.id}");
+    }
     
     
 }

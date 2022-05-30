@@ -29,6 +29,7 @@ namespace test_shit.Network
 
         private async Task test()
         {
+
             
             Console.WriteLine("her");
             Actor actor = new Actor();
@@ -301,9 +302,9 @@ namespace test_shit.Network
             return movieIds;
         }
 
-        public List<int> getFavorites(int userID)
+        public List<string> getFavorites(int userID)
         {
-            List<int> movieFavoritesIDs = new List<int>();
+            List<string> movieFavoritesIDs = new List<string>();
             try
             {
                
@@ -311,7 +312,7 @@ namespace test_shit.Network
               
                 rds.Open();
 
-                string sql = "select MovieId from dbo.Favorites where UserId=@user";
+                string sql = "select MovieId from dbo.Favorite where UserId=@user";
                 
 
                 command = new SqlCommand(sql, rds);
@@ -324,7 +325,7 @@ namespace test_shit.Network
                 
                 while (dataReader.Read())
                 {
-                    movieFavoritesIDs.Add(dataReader.GetInt32(0));
+                    movieFavoritesIDs.Add(dataReader.GetString(1));
                 }
         
                 dataReader.Close();
@@ -362,7 +363,7 @@ namespace test_shit.Network
             return popularActors;
         }
 
-        public void addMovieToFavorites(int userId,int movieId)
+        public void addMovieToFavorites(int userId,string movieId)
         {
             try
             {
@@ -371,13 +372,13 @@ namespace test_shit.Network
 
                 rds.Open();
 
-                string sql = "insert into dbo.Favorites values(@user,@movie)";
+                string sql = "insert into dbo.Favorite values(@user,@movie)";
 
-
+                string realid = movieId.Substring(2);
                 command = new SqlCommand(sql, rds);
                 command.Parameters.AddWithValue("@user", userId);
-                command.Parameters.AddWithValue("@movie", movieId);
-
+                command.Parameters.AddWithValue("@movie", realid);
+    
 
                 command.ExecuteNonQuery();
 

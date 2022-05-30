@@ -1,4 +1,5 @@
-﻿
+﻿@using test_shit.Data
+@inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
     <div class="container">
@@ -43,8 +44,9 @@
                     <div class="cntr">
                         <div class="cntr-innr">
                             <label class="search" for="inpt_search">
-                                <input id="inpt_search" type="text" />
+                                <input id="inpt_search" type="text" @bind="SearchTerm"/>
                             </label>
+                            <button id="searchBtn" @onclick="@(e => ToMovieDetails(SearchTerm))">Go</button>
                         </div>
                     </div>
                 </li>
@@ -58,11 +60,23 @@
 
 
 @code {
+    private string SearchTerm { get; set; } = "";
+    
     bool collapseNavMenu = true;
 
     string baseMenuClass = "navbar-collapse d-sm-inline-flex flex-sm-row-reverse";
 
     string NavMenuCssClass => baseMenuClass + (collapseNavMenu ? " collapse" : "");
+    private TopRated _aMovies = new TopRated();
+    private List<TopRated.Result> _aResults = new List<TopRated.Result>();
+    
+    private void ToMovieDetails(String mName)
+    {
+        
+        NavigationManager.NavigateTo($"/Search/{mName}",true);
+        StateHasChanged();
+        
+    }
 
     void ToggleNavMenu()
     {

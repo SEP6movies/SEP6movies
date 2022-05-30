@@ -327,6 +327,7 @@ button:not(:disabled) {
     width: 500px;
     margin-right: 0;
     height: 32px;
+    
 }
 .search.active:after, .search:hover:after {
     height: 0;

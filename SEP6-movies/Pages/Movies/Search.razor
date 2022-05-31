@@ -75,7 +75,7 @@
         _searchResult.Clear();
         foreach (var movie in _allMovies)
         {
-            if (movie.original_title.Contains(search))
+            if (movie.original_title.ToLower().Contains(search.ToLower()))
             {
                 _searchResult.Add(movie);
             }

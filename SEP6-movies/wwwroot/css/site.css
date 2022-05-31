@@ -432,11 +432,17 @@ th{
     margin-bottom: 20px;
     display: flex;
     justify-content: right;
-    position: absolute;
+    
+    
 }
 
 label{
     font-weight: 600;
+}
+
+#favBtn{
+    height: 45px;
+    width: 45px;
 }
 
 

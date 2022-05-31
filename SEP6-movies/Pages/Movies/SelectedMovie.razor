@@ -3,6 +3,7 @@
 @using test_shit.Network
 @inject IJSRuntime JSRuntime
 @using System.Net.Mime
+@using System.Globalization
 @inject NetworkImpl _networkImpl
 @inject NavigationManager NavigationManager
 
@@ -27,8 +28,8 @@
             </div>
             <div class="col-md-9">
                 
-                        <div class="col-md-12 favoriteButton" @onclick="AddToFavorites">
-                            <i class="fa fa-heart" id="heart" type="button"></i>
+                        <div class="col-md-12 favoriteButton change-icon" @onclick="AddToFavorites" type="button">
+                            <i class="hvr-push heart fa fa-heart" id="heart"></i>
                         </div>
                 <div class="col-md-12">
                     <div class="row">
@@ -42,9 +43,9 @@
                             }
                             else
                             {
-                                @foreach (var item in _genres)
+                                @foreach (var item in tmp)
                                 {
-                                    <span>@item </span>
+                                    <span>@item</span>
                                 }
                             }
                         </div>
@@ -79,7 +80,8 @@
                             }
                             else
                             {
-                                <p>@_movie.release_date </p>
+                                string newFormat = DateTime.ParseExact(_movie.release_date, "yyyy-MM-dd", CultureInfo.InvariantCulture).ToString("dd MMMM yyyy");
+                                <p> @newFormat </p>
                             }
                         </div>
                     </div>
@@ -425,6 +427,7 @@
     private Movie _movie = new Movie();
     private Credits _credits = new Credits();
     private List<string> _genres = new List<string>();
+    List<string> tmp = new List<string>();
     private List<Credits.Cast> _cast = new List<Credits.Cast>();
     private List<Credits.Crew> _crew = new List<Credits.Crew>();
     
@@ -460,7 +463,12 @@
             _productionCompanies.Add(item);
         }
         
+        @foreach(var i in _genres)
+        {
+            tmp.Add(i + ", ");
+        }
         
+        tmp[tmp.Count-1] = _genres[_genres.Count-1];
     }
 
     public void AddToFavorites()

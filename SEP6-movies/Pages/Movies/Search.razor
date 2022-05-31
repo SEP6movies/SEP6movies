@@ -36,7 +36,7 @@
     public String name { get; set; }
     
     private List<TopRated.Result> _searchResult = new List<TopRated.Result>();
-    
+
     private List<TopRated.Result> _allMovies = new List<TopRated.Result>();
     private string emptyPath = "https://image.tmdb.org/t/p/original";
     
@@ -80,7 +80,6 @@
                 _searchResult.Add(movie);
             }
         }
-        
     }
     
 
@@ -140,6 +139,7 @@
             Console.WriteLine("it fucked here");
             Console.WriteLine(e);
         }
+        
         
     }
     

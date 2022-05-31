@@ -1,4 +1,8 @@
 @page "/Friends"
+@using test_shit.Data
+@using test_shit.Network
+@inject NetworkImpl _networkImpl
+@inject NavigationManager NavigationManager
 
 <div class="mainView">
     <div class="container">
@@ -6,87 +10,39 @@
             <h4>Friends</h4>
         </div>
         <div class="row">
-            <div class="col-md-3 favoriteMovies">
-                <div class="card mb-4 box-shadow">
-                    <img src="test-images/Angelina_Jolie_2_June_2014_(cropped).jpg" alt="movie" style="width:200px">
-                    <p class="card-text">Name</p>
+            @foreach (var item in _friends)
+            {
+                <div class="col-md-3 favoriteMovies">
+                    <div class="card mb-4 box-shadow">
+                        <img src="images/image1.png" alt="movie" type="button" style="width:200px" @onclick="() => ToFriendsFav(item)">
+                        <p class="card-text">@item.username</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <div class="card mb-4 box-shadow">
-                    <img src="test-images/Angelina_Jolie_2_June_2014_(cropped).jpg" alt="movie" style="width:200px">
-                    <p class="card-text">Name</p>
-                </div>            
-            </div>
-
-            <div class="col-md-3 favoriteMovies">
-                <div class="card mb-4 box-shadow">
-                    <img src="test-images/Angelina_Jolie_2_June_2014_(cropped).jpg" alt="movie" style="width:200px">
-                    <p class="card-text">Name</p>
-                </div>            
-            </div>
-
-            <div class="col-md-3 favoriteMovies">
-                <div class="card mb-4 box-shadow">
-                    <img src="test-images/Angelina_Jolie_2_June_2014_(cropped).jpg" alt="movie" style="width:200px">
-                    <p class="card-text">Name</p>
-                </div> 
-            </div>
-
-
+            }
         </div>
-        
-        
-        <div class="row">
-            <div class="col-md-3 favoriteMovies">
-                <div class="card mb-4 box-shadow">
-                    <img src="test-images/Angelina_Jolie_2_June_2014_(cropped).jpg" alt="movie" style="width:200px">
-                    <p class="card-text">Name</p>
-                </div>
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <div class="card mb-4 box-shadow">
-                    <img src="test-images/Angelina_Jolie_2_June_2014_(cropped).jpg" alt="movie" style="width:200px">
-                    <p class="card-text">Name</p>
-                </div>            
-            </div>
-
-            <div class="col-md-3 favoriteMovies">
-                <div class="card mb-4 box-shadow">
-                    <img src="test-images/Angelina_Jolie_2_June_2014_(cropped).jpg" alt="movie" style="width:200px">
-                    <p class="card-text">Name</p>
-                </div>            
-            </div>
-
-            <div class="col-md-3 favoriteMovies">
-                <div class="card mb-4 box-shadow">
-                    <img src="test-images/Angelina_Jolie_2_June_2014_(cropped).jpg" alt="movie" style="width:200px">
-                    <p class="card-text">Name</p>
-                </div> 
-            </div>
-
-
-        </div>
-        @*<div class="row">
-            <div class="col-md-3 favoriteMovies">
-                <p>Name</p>            
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <p>Name</p>            
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <p>Name</p>            
-            </div>
-            <div class="col-md-3 favoriteMovies">
-                <p>Name</p>            
-            </div>
-        
-        </div>*@
         
     </div>
 </div>
 
 
 @code {
-    
+    public List<User> _friends = new List<User>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _friends = _networkImpl.getFriends(1);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    public void ToFriendsFav(User user)
+    {
+        NavigationManager.NavigateTo($"/FriendsFavMovies/{user.id}");
+    }
+
 }

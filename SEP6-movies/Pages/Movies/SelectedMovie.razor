@@ -27,8 +27,8 @@
             </div>
             <div class="col-md-9">
                 
-                        <div class="col-md-12 favoriteButton" type="button" @onclick="AddToFavorites">
-                            <i class="fa fa-heart" id="heart" ></i>
+                        <div class="col-md-12 favoriteButton" @onclick="AddToFavorites">
+                            <i class="fa fa-heart" id="heart" type="button"></i>
                         </div>
                 <div class="col-md-12">
                     <div class="row">
@@ -299,7 +299,7 @@
                     else
                     {
                         <div class="col-md-11">
-                            <p>@_movie.budget</p>
+                            <p>$@_movie.budget</p>
                         </div>
                     }
                 </div>
@@ -395,14 +395,12 @@
                 <div>
                     <table>
                         <tr>
-                            <th>Logo</th>
                             <th>Name</th>
                             <th>Country</th>
                         </tr>
                     @foreach (var item in _productionCompanies)
                     {
                         <tr>
-                            <td><img src=@item.logo_path></td>
                             <td>@item.name</td>
                             <td>@item.origin_country</td>
                         </tr>
@@ -412,13 +410,7 @@
                 </div>
         </div>
         
-        
-        <div class="row">
-            <div class="col-md-12 comments">
-                <h2>Comments...</h2> 
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ultrices ipsum eget lacinia pharetra. Aenean volutpat hendrerit ex, interdum luctus dui mattis in. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Curabitur ultricies cursus arcu, vitae pulvinar urna commodo sed. Donec pretium lobortis laoreet. Integer scelerisque magna nulla, non lacinia metus mattis non. Proin sit amet tellus justo. Phasellus pellentesque hendrerit augue, id venenatis nulla hendrerit quis. Etiam pulvinar lectus a neque pretium, ut facilisis leo sodales.
-            </div>
-        </div>
+    
         
     </div>
 

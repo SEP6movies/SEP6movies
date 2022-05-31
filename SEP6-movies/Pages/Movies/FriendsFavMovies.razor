@@ -1,0 +1,74 @@
+@page "/FriendsFavMovies/{userId:int}"
+@using test_shit.Data
+@using test_shit.Network
+@inject NetworkImpl _networkImpl
+@inject NavigationManager NavigationManager
+
+
+<div class="mainView">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="actorTitles">Your friend's favorite movies</h3>
+            </div>
+        </div>
+        
+        <div class="row">
+            @if (!_movies.Any())
+                        {
+                            <div class="col-md-12 loadingText">
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div></div>
+                        }
+            else
+            {
+                @foreach (var item in _movies)
+                {
+                    <div class="col-md-3 favoriteMovies">
+                        <div class="card mb-4 box-shadow">
+                            <img src=@item.poster_path alt="" style="width: 280px" @onclick="@(() => ToMovieDetails(item))" type="button"/>
+                            <p class="card-text">@item.title</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+    </div>
+</div>
+
+@code {
+    [Parameter] 
+    public int userId { get; set; }
+    
+    private List<Movie> _movies = new List<Movie>();
+    private Movie _movie;
+    private List<string> _ids = new List<string>();
+    
+    private void ToMovieDetails(Movie movie)
+    {
+        NavigationManager.NavigateTo($"/SelectedMovie/{movie.id}");
+        Console.WriteLine("we gooooooo for " + movie.imdb_id + "   " + movie.id);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _ids = _networkImpl.getFavorites(userId);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        
+        for (int i = 0; i < _ids.Count; i++)
+        {
+            _movies.Add(await _networkImpl.getMovieFromApi(int.Parse(_ids[i])));
+            Console.WriteLine(int.Parse(_ids[i]));
+        }
+    }
+
+}

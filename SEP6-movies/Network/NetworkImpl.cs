@@ -17,14 +17,15 @@ namespace test_shit.Network
 
         private HttpClient client = new HttpClient();
         private Movie _movie = new Movie();
-        
+
 
         public NetworkImpl()
         {
-            connectionString = @"Data Source=35.195.143.0;Initial Catalog=SEP6Movies;User ID=sqlserver;Password=c`H0nsr2DAss|#q4;TrustServerCertificate=True";
+            connectionString =
+                @"Data Source=35.195.143.0;Initial Catalog=SEP6Movies;User ID=sqlserver;Password=c`H0nsr2DAss|#q4;TrustServerCertificate=True";
             test();
             Console.WriteLine("frima");
-           
+
         }
 
         private async Task test()
@@ -59,38 +60,38 @@ namespace test_shit.Network
             Console.WriteLine(movies[0].id + "asdsasajfa");
             Console.WriteLine("tasda");
             */
-            
+
 
         }
 
 
-        public bool checkForUser(string first,string pass)
+        public bool checkForUser(string first, string pass)
         {
             bool exits = false;
             try
             {
-               
+
                 rds = new SqlConnection(connectionString);
-              
+
                 rds.Open();
 
                 string sql = "select * from dbo.users where (username=@user or email=@email) and password=@pass";
-                
+
 
                 command = new SqlCommand(sql, rds);
                 command.Parameters.AddWithValue("@user", first);
-                command.Parameters.AddWithValue("@email",first);
+                command.Parameters.AddWithValue("@email", first);
                 command.Parameters.AddWithValue("@pass", pass);
 
                 dataReader = command.ExecuteReader();
 
 
-                
+
                 while (dataReader.Read())
                 {
                     exits = true;
                 }
-        
+
                 dataReader.Close();
 
                 rds.Close();
@@ -111,11 +112,12 @@ namespace test_shit.Network
             Movie movie = new Movie();
             try
             {
-             
+
                 string trueMovieID = "";
                 trueMovieID = calculateTrueID(movieID);
                 HttpResponseMessage responseMessage = await client.GetAsync(
-                    "https://api.themoviedb.org/3/movie/tt"+trueMovieID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
+                    "https://api.themoviedb.org/3/movie/tt" + trueMovieID +
+                    "?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     movie = await responseMessage.Content.ReadAsAsync<Movie>();
@@ -128,7 +130,7 @@ namespace test_shit.Network
                 Console.WriteLine(e);
                 throw;
             }
-            
+
 
 
             return movie;
@@ -140,10 +142,11 @@ namespace test_shit.Network
             Movie movie = new Movie();
             try
             {
-             
-              
+
+
                 HttpResponseMessage responseMessage = await client.GetAsync(
-                    "https://api.themoviedb.org/3/movie/"+ids+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
+                    "https://api.themoviedb.org/3/movie/" + ids +
+                    "?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     movie = await responseMessage.Content.ReadAsAsync<Movie>();
@@ -156,7 +159,7 @@ namespace test_shit.Network
                 Console.WriteLine(e);
                 throw;
             }
-            
+
 
 
             return movie;
@@ -165,7 +168,7 @@ namespace test_shit.Network
         public void removeFromFavorites(int userId, string movieId)
         {
             string sql = "delete from dbo.Favorite where Userid=@userId and MovieId=@movieId";
-                    
+
             command = new SqlCommand(sql, rds);
             command.Parameters.AddWithValue("@userId", userId);
             command.Parameters.AddWithValue("@movieId", movieId);
@@ -187,22 +190,24 @@ namespace test_shit.Network
 
             return movies;
         }
-        
+
         public async Task<Actor> getActorFromApiWithImdbID(int actorID)
         {
             FindActorByID personResult = new FindActorByID();
             string trueActorID = calculateTrueID(actorID);
-            
+
             HttpResponseMessage responseMessage1 = await client.GetAsync(
-                "https://api.themoviedb.org/3/find/nm"+trueActorID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US&external_source=imdb_id");
+                "https://api.themoviedb.org/3/find/nm" + trueActorID +
+                "?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US&external_source=imdb_id");
             if (responseMessage1.IsSuccessStatusCode)
             {
                 personResult = await responseMessage1.Content.ReadAsAsync<FindActorByID>();
             }
-            
+
             Actor actor = new Actor();
             HttpResponseMessage responseMessage = await client.GetAsync(
-                "https://api.themoviedb.org/3/person/"+personResult.person_results[0].id+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
+                "https://api.themoviedb.org/3/person/" + personResult.person_results[0].id +
+                "?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
             if (responseMessage.IsSuccessStatusCode)
             {
                 actor = await responseMessage.Content.ReadAsAsync<Actor>();
@@ -211,14 +216,15 @@ namespace test_shit.Network
 
             return actor;
         }
-        
+
         public async Task<PopularActors.Result> getActorFromApi(int actorID)
         {
             //The ID that tmdb uses is different from imdb so therefore this method should only be used if the actorID
             //comes from one of the other methods such as getCredits
             PopularActors.Result actor = new PopularActors.Result();
             HttpResponseMessage responseMessage = await client.GetAsync(
-                "https://api.themoviedb.org/3/person/"+actorID+"?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
+                "https://api.themoviedb.org/3/person/" + actorID +
+                "?api_key=088cf42d74dfbb21a6c0d01269bd904a&language=en-US");
             if (responseMessage.IsSuccessStatusCode)
             {
                 actor = await responseMessage.Content.ReadAsAsync<PopularActors.Result>();
@@ -228,7 +234,9 @@ namespace test_shit.Network
 
             return actor;
         }
-        
+
+       
+
         /*
         public async Task<Actor> getActorFromApi(int actorID)
         {
@@ -242,8 +250,8 @@ namespace test_shit.Network
                 actor = await responseMessage.Content.ReadAsAsync<Actor>();
                 actor.profile_path = "https://image.tmdb.org/t/p/original" + actor.profile_path;
             }
-
-
+    
+    
             return actor;
         }
         */
@@ -270,6 +278,60 @@ namespace test_shit.Network
             trueID = temp;
 
             return trueID;
+        }
+        public List<User> getFriends(int userId)
+        {
+            List<User> friends = new List<User>();
+            try
+            {
+                List<int> friendsIds = new List<int>();
+                rds = new SqlConnection(connectionString);
+
+                rds.Open();
+
+                string sql = "select FriendID from dbo.Friends where UserId =@user";
+
+
+                command = new SqlCommand(sql, rds);
+                command.Parameters.AddWithValue("@user",userId);
+
+
+
+                dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    friendsIds.Add(dataReader.GetInt32(0));
+                }
+                dataReader.Close();
+
+                for (int i = 0; i < friendsIds.Count; i++)
+                {
+
+                    sql = "select username from dbo.Users where id=@friendID";
+                    command = new SqlCommand(sql, rds);
+                    command.Parameters.AddWithValue("@friendID",friendsIds[i]);
+
+
+
+                    dataReader = command.ExecuteReader();
+                    User user = new User();
+                    user.id = friendsIds[i];
+                    while (dataReader.Read())
+                    {
+                        user.username = dataReader.GetString(0);
+                       
+                    }
+                    friends.Add(user);
+                    dataReader.Close();;
+                }
+                rds.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.StackTrace);
+            }
+
+            return friends;
         }
 
         public async Task<Credits> getCreditsFromApi(int movieID)

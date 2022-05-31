@@ -17,12 +17,12 @@
                     <div class="card mb-4 box-shadow">
                         @if (@item.profile_path == null)
                         {
-                            <img src="images/image1.png" style="width: 200px" />
+                            <img src="images/image1.png" style="width: 200px" type="button"/>
                             <p class="card-text">@item.name</p>
                         }
                         else
                         {
-                            <img src=@item.profile_path style="width: 200px" />
+                            <img src=@item.profile_path style="width: 200px" @onclick="()=> ToActorDetails(item)" type="button"/>
                             <p class="card-text">@item.name</p>
                         }
                     </div>
@@ -55,10 +55,10 @@
     }
     
     /*FOR NAVIGATION*/
-    /*private void ToActorDetails(PopularActors.Result actor)
+    private void ToActorDetails(PopularActors.Result actor)
     {
         NavigationManager.NavigateTo($"/SelectedActor/{actor.id}");
-        /*Console.WriteLine("we gooooooo for " + movie.imdb_id + "   " + movie.id);#1#
-    }*/
+        /*Console.WriteLine("we gooooooo for " + movie.imdb_id + "   " + movie.id);*/
+    }
 
 }

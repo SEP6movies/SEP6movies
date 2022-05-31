@@ -6,89 +6,43 @@
 
 <div class="mainView">
     <div class="container">
-        @*<div class="row favoriteMovies">
-            <div class="col-md-1 filterMovies">
-                <form action="#">
-                    <select name="languages" id="lang" type="button" class="dropdownSelect">
-                        <option value="sort" selected="selected">Sort</option>
-                        <option value="newest">newest</option>
-                        <option value="title">Title (A-Z)</option>
-                        <option value="title">Title (Z-A)</option>
-                    </select>
-                </form>
-            </div>
-            <div class="col-md-1 filterMovies">
-                <form action="#">
-                    <select name="languages" id="lang" type="button" class="dropdownSelect">
-                        <option value="genre" selected="selected">Genre</option>
-                        <option value="action">Action</option>
-                        <option value="comedy">Comedy</option>
-                        <option value="crime">Crime</option>
-                        <option value="drama">Drama</option>
-                        <option value="fantasy">Fantasy</option>
-                        <option value="horror">Horror</option>
-                        <option value="romance">Romance</option>
-                        <option value="science">Science</option>
-                        <option value="thriller">Thriller</option>
-                        <option value="historical">Historical</option>
-
-                    </select></form>
-            </div>
-            <div class="col-md-1 filterMovies">
-                <form action="#">
-                    <select name="languages" id="lang" type="button" class="dropdownSelect">
-                        <option value="ratings">Rating</option>
-                        <option value="5stars">5 stars</option>
-                        <option value="4stars">4 stars</option>
-                        <option value="3stars">3 stars</option>
-                        <option value="2stars">2 stars</option>
-                        <option value="1star">1 star</option>
-                    </select>
-                </form>
-            </div>
-            <div class="col-md-1 filterMovies">
-                <form action="#">
-                    <select name="languages" id="lang" type="button" class="dropdownSelect">
-                        <option value="year" selected="selected">Year</option>
-                        <option value="">idk</option>
-                        <option value="">idk</option>
-                        <option value="">idk</option>
-                        <option value="">idk</option>
-                        <option value="">idk</option>
-                        <option value="">idk</option>
-                        <option value="">idk</option>
-                    </select>
-                </form>
-            </div>
-            <div class="col-md-1 filterMovies">
-                <form action="#">
-                    <select name="languages" id="lang" type="button" class="dropdownSelect">
-                        <option value="boxoffice" selected="selected">Box office</option>
-                        <option value="">idk</option>
-                        <option value="">idk</option>
-                        <option value="">idk</option>
-                        <option value="">idk</option>
-                        <option value="">idk</option>
-                        <option value="">idk</option>
-                        <option value="">idk</option>
-                    </select>
-                </form>
-            </div>
-            <div class="col-md-0 filterMovies">
-                <button type="submit" value="Submit" class="goButton">Go</button>
-            </div>
-
-            <div class="col-md-0 filterMovies">
-                <input type="reset" class="resetFiltersButton"/>
-            </div>
-
-        </div>*@
+      
+        <div class="row">
+            @if (!_aResults.Any())
+            {
+                <div class="col-md-12 loadingText">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div></div>
+            }
+            else
+            {
+                @foreach (var item in _aResults.Select((value, i) => new { i, value }))
+                {
+                    @if (@item.value.title != null)
+                    {
+                        <div class="col-md-3 favoriteMovies">
+                            <div class="card mb-4 box-shadow">
+                                @if (@item.value.poster_path == emptyPath || @item.value.poster_path == null)
+                                {
+                                    <img src="images/image1.png" style="width: 280px; height: 420px;" @onclick="@(() => ToMovieDetails2(item.value))" type="button"/>
+                                    <p class="card-text">@item.value.title</p>
+                                }
+                                else
+                                {
+                                    <img src=@item.value.poster_path style="width: 280px" @onclick="@(() => ToMovieDetails2(item.value))" type="button"/>
+                                    <p class="card-text">@item.value.title</p>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        
         <div class="row">
             @if (!_movies.Any())
             {
-                <div class="col-md-12 loadingText">
-                    Loading...
-                </div>
             }
             else
             {
@@ -100,12 +54,12 @@
                             <div class="card mb-4 box-shadow">
                                 @if (@item.poster_path == emptyPath || @item.poster_path == null)
                                 {
-                                    <img src="images/image1.png" style="width: 280px; height: 420px;" @onclick="@(() => ToMovieDetails(item))"/>
+                                    <img src="images/image1.png" style="width: 280px; height: 420px;" @onclick="@(() => ToMovieDetails(item))" type="button"/>
                                     <p class="card-text">@item.title</p>
                                 }
                                 else
                                 {
-                                    <img src=@item.poster_path style="width: 280px" @onclick="@(() => ToMovieDetails(item))"/>
+                                    <img src=@item.poster_path style="width: 280px" @onclick="@(() => ToMovieDetails(item))" type="button"/>
                                     <p class="card-text">@item.title</p>
                                 }
                             </div>
@@ -120,6 +74,9 @@
 @code {
     private List<Movie> _movies = new List<Movie>();
     private string emptyPath = "https://image.tmdb.org/t/p/original";
+    
+    private TopRated _aMovies = new TopRated();
+    private List<TopRated.Result> _aResults = new List<TopRated.Result>();
     /*
     public string SearchText { get; set; } = "";
     List<Movie> _searchedMovies = _movies.Where(i => i.title.ToLower().Contains(SearchText.ToLower())).ToList();
@@ -132,6 +89,8 @@
         try
         {
             _movies = await _networkImpl.getAllMovies();
+            _aMovies = await _networkImpl.getMovieBasedOnGenreFromApi(80);
+            _aResults = _aMovies.results;
         }
         catch (Exception e)
         {
@@ -151,6 +110,11 @@
         Console.WriteLine("we gooooooo for " + movie.imdb_id + "   " + movie.id);
     }
 
+    private void ToMovieDetails2(TopRated.Result movie)
+    {
+        NavigationManager.NavigateTo($"/SelectedMovie/{movie.id}");
+        
+    }
     
 
 }

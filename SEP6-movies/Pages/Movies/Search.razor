@@ -1,0 +1,154 @@
+@page "/Search/{name}"
+@using test_shit.Network
+@using test_shit.Data
+@using System.Collections.ObjectModel
+@inject NetworkImpl _networkImpl
+@inject NavigationManager NavigationManager
+
+<div class="mainView">
+    <div class="container">
+        <div class="row">
+            @if (!_searchResult.Any())
+            {
+                <div class="col-md-12 loadingText">
+                    <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+            }
+            @foreach (var item in _searchResult.Select((value, i) => new { i, value }))
+            {
+                <div class="col-md-3 favoriteMovies">
+                    <div class="card mb-4 box-shadow">
+                       
+                        <img src=@item.value.poster_path style="width: 280px" @onclick="@(() => ToMovieDetails2(item.value))" type="button"/>
+                        <p class="card-text">@item.value.title</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    
+    [Parameter]
+    public String name { get; set; }
+    
+    private List<TopRated.Result> _searchResult = new List<TopRated.Result>();
+    
+    private List<TopRated.Result> _allMovies = new List<TopRated.Result>();
+    private string emptyPath = "https://image.tmdb.org/t/p/original";
+    
+    private TopRated _aMovies = new TopRated();
+    private List<TopRated.Result> _aResults = new List<TopRated.Result>();
+    
+    private TopRated _cMovies = new TopRated();
+    private List<TopRated.Result> _cResults = new List<TopRated.Result>();
+    
+    private TopRated _crMovies = new TopRated();
+    private List<TopRated.Result> _crResults = new List<TopRated.Result>();
+    
+    private TopRated _dMovies = new TopRated();
+    private List<TopRated.Result> _dResults = new List<TopRated.Result>();
+    
+    private TopRated _fMovies = new TopRated();
+    private List<TopRated.Result> _fResults = new List<TopRated.Result>();
+    
+    private TopRated _hMovies = new TopRated();
+    private List<TopRated.Result> _hResults = new List<TopRated.Result>();
+    
+    private TopRated _rMovies = new TopRated();
+    private List<TopRated.Result> _rResults = new List<TopRated.Result>();
+    
+    private TopRated _sMovies = new TopRated();
+    private List<TopRated.Result> _sResults = new List<TopRated.Result>();
+    
+    private TopRated _tMovies = new TopRated();
+    private List<TopRated.Result> _tResults = new List<TopRated.Result>();
+    
+    private TopRated _hiMovies = new TopRated();
+    private List<TopRated.Result> _hiResults = new List<TopRated.Result>();
+
+    private void SearchList(String search)
+    {
+        _searchResult.Clear();
+        foreach (var movie in _allMovies)
+        {
+            if (movie.original_title.Contains(search))
+            {
+                _searchResult.Add(movie);
+            }
+        }
+        
+    }
+    
+
+    private void CombineLists()
+    {
+        _allMovies.AddRange(_aResults);
+        _allMovies.AddRange(_cResults);
+        _allMovies.AddRange(_crResults);
+        _allMovies.AddRange(_dResults);
+        _allMovies.AddRange(_fResults);
+        _allMovies.AddRange(_hResults);
+        _allMovies.AddRange(_rResults);
+        _allMovies.AddRange(_sResults);
+        _allMovies.AddRange(_tResults);
+        _allMovies.AddRange(_hiResults);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _aMovies = await _networkImpl.getMovieBasedOnGenreFromApi(28);
+            _aResults = _aMovies.results;
+            
+            _cMovies = await _networkImpl.getMovieBasedOnGenreFromApi(35);
+            _cResults = _cMovies.results;
+            
+            _crMovies = await _networkImpl.getMovieBasedOnGenreFromApi(80);
+            _crResults = _crMovies.results;
+            
+            _dMovies = await _networkImpl.getMovieBasedOnGenreFromApi(18);
+            _dResults = _dMovies.results;
+            
+            _fMovies = await _networkImpl.getMovieBasedOnGenreFromApi(14);
+            _fResults = _fMovies.results;
+            
+            _hMovies = await _networkImpl.getMovieBasedOnGenreFromApi(27);
+            _hResults = _hMovies.results;
+            
+            _rMovies = await _networkImpl.getMovieBasedOnGenreFromApi(10749);
+            _rResults = _rMovies.results;
+            
+            _sMovies = await _networkImpl.getMovieBasedOnGenreFromApi(878);
+            _sResults = _sMovies.results;
+            
+            _tMovies = await _networkImpl.getMovieBasedOnGenreFromApi(53);
+            _tResults = _tMovies.results;
+            
+            _hiMovies = await _networkImpl.getMovieBasedOnGenreFromApi(36);
+            _hiResults = _hiMovies.results;
+            
+            CombineLists();
+            SearchList(name);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("it fucked here");
+            Console.WriteLine(e);
+        }
+        
+    }
+    
+
+    private void ToMovieDetails2(TopRated.Result movie)
+    {
+        NavigationManager.NavigateTo($"/SelectedMovie/{movie.id}");
+        
+    }
+    
+
+}

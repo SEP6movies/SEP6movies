@@ -29,9 +29,11 @@ namespace test_shit.Network
 
         private async Task test()
         {
-
-            
+            /*
+            addMovieToFavorites(1,"tt12141451");
             Console.WriteLine("her");
+            List<string> asd = new List<string>();
+            asd = getFavorites(1);
             Actor actor = new Actor();
             Credits credits = new Credits();
             PopularActors popularActors = new PopularActors();
@@ -56,6 +58,7 @@ namespace test_shit.Network
             movies = await getAllMovies();
             Console.WriteLine(movies[0].id + "asdsasajfa");
             Console.WriteLine("tasda");
+            */
             
 
         }
@@ -325,7 +328,7 @@ namespace test_shit.Network
                 
                 while (dataReader.Read())
                 {
-                    movieFavoritesIDs.Add(dataReader.GetString(1));
+                    movieFavoritesIDs.Add(dataReader.GetString(0));
                 }
         
                 dataReader.Close();
@@ -368,20 +371,36 @@ namespace test_shit.Network
         {
             try
             {
-
+                string realid = movieId.Substring(2);
                 rds = new SqlConnection(connectionString);
 
                 rds.Open();
+                bool exits = false;
 
-                string sql = "insert into dbo.Favorite values(@user,@movie)";
-
-                string realid = movieId.Substring(2);
-                command = new SqlCommand(sql, rds);
+                string sql1 = "select * from dbo.Favorite where Userid=@user and MovieId=@movie";
+                command = new SqlCommand(sql1, rds);
                 command.Parameters.AddWithValue("@user", userId);
                 command.Parameters.AddWithValue("@movie", realid);
-    
+                dataReader = command.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    exits = true;
+                }
 
-                command.ExecuteNonQuery();
+                dataReader.Close();
+                
+                if (exits == false)
+                {
+                    
+                    string sql = "insert into dbo.Favorite values(@user,@movie)";
+                    
+                    command = new SqlCommand(sql, rds);
+                    command.Parameters.AddWithValue("@user", userId);
+                    command.Parameters.AddWithValue("@movie", realid);
+
+
+                    command.ExecuteNonQuery();
+                }
 
 
 

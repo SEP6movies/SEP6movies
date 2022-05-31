@@ -162,6 +162,18 @@ namespace test_shit.Network
             return movie;
         }
 
+        public void removeFromFavorites(int userId, string movieId)
+        {
+            string sql = "delete from dbo.Favorite where Userid=@userId and MovieId=@movieId";
+                    
+            command = new SqlCommand(sql, rds);
+            command.Parameters.AddWithValue("@userId", userId);
+            command.Parameters.AddWithValue("@movieId", movieId);
+
+
+            command.ExecuteNonQuery();
+        }
+
         public async Task<List<Movie>> getAllMovies()
         {
             List<Movie> movies = new List<Movie>();
@@ -420,6 +432,11 @@ namespace test_shit.Network
 
 
                     command.ExecuteNonQuery();
+                }
+
+                if (exits == true)
+                {
+                    removeFromFavorites(userId,realid);
                 }
 
 

@@ -77,13 +77,8 @@
     
     private TopRated _aMovies = new TopRated();
     private List<TopRated.Result> _aResults = new List<TopRated.Result>();
-    /*
-    public string SearchText { get; set; } = "";
-    List<Movie> _searchedMovies = _movies.Where(i => i.title.ToLower().Contains(SearchText.ToLower())).ToList();
-    */
-
-
-
+    
+    
     protected override async Task OnInitializedAsync()
     {
         try
@@ -94,7 +89,6 @@
         }
         catch (Exception e)
         {
-            Console.WriteLine("it fucked here");
             Console.WriteLine(e);
         }
 
@@ -107,13 +101,11 @@
     private void ToMovieDetails(Movie movie)
     {
         NavigationManager.NavigateTo($"/SelectedMovie/{movie.id}");
-        Console.WriteLine("we gooooooo for " + movie.imdb_id + "   " + movie.id);
     }
 
     private void ToMovieDetails2(TopRated.Result movie)
     {
         NavigationManager.NavigateTo($"/SelectedMovie/{movie.id}");
-        
     }
     
 

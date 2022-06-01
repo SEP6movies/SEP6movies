@@ -47,7 +47,6 @@
     private void ToMovieDetails(Movie movie)
     {
         NavigationManager.NavigateTo($"/SelectedMovie/{movie.id}");
-        Console.WriteLine("we gooooooo for " + movie.imdb_id + "   " + movie.id);
     }
 
     protected override async Task OnInitializedAsync()
@@ -65,21 +64,7 @@
         for (int i = 0; i < _ids.Count; i++)
         {
             _movies.Add(await _networkImpl.getMovieFromApi(int.Parse(_ids[i])));
-            Console.WriteLine(int.Parse(_ids[i]));
         }
-        
-        /*foreach (var i in _ids)
-        {
-            Console.WriteLine("For id: " + i);
-            foreach (var item in _movies)
-            {
-                Console.WriteLine("For movie with id: " + item.imdb_id);
-                if (i==item.imdb_id)
-                {
-                    _favoriteMovies.Add(item);
-                }
-            }
-        }*/
     }
 
    

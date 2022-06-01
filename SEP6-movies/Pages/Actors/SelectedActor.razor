@@ -63,8 +63,6 @@
 @code {
     [Parameter]
     public int id { get; set; }
-    
-    /*FOR NAVIGATION*/
     public PopularActors.Result _actor = new PopularActors.Result();
     private List<PopularActors.KnownFor> _knownForsNames = new List<PopularActors.KnownFor>();
     private string _gender = String.Empty;
@@ -90,14 +88,7 @@
             }
             
         }
-        else
-        {
-            Console.WriteLine("EMPTY");
-
-        }
         
-        
-
         if (_actor.gender == 1)
         {
             _gender = "Female";

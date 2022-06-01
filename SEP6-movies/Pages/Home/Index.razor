@@ -627,8 +627,6 @@
     private TopRated _hiMovies = new TopRated();
     private List<TopRated.Result> _hiResults = new List<TopRated.Result>();
     
-
-    string SearchTerm { get; set; } = "";
     
     private void ToMovieDetails(TopRated.Result movie)
     {
@@ -679,6 +677,6 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await JSRuntime.InvokeVoidAsync("startCarousels"); // NOTE: call JavaScript function
+        await JSRuntime.InvokeVoidAsync("startCarousels"); 
     }
 }

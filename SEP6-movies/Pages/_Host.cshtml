@@ -17,11 +17,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
     <script type="text/javascript">
+    /*
+    Code used in this section is inspired by https://azmind.com/bootstrap-carousel-multiple-items/
+    */
+                                
             		function startCarousels() { 
             			$('.carousel').on('slide.bs.carousel', function (e) {
-                            /*
-                                CC 2.0 License Iatek LLC 2018 - Attribution required
-                            */
+                            
                             var $e = $(e.relatedTarget);
                             var idx = $e.index();
                             var itemsPerSlide = 5;
@@ -49,6 +51,9 @@
                         }
             </script>
     <script type="text/javascript">
+    /* 
+     Code used in this section is inspired by https://www.sliderrevolution.com/resources/bootstrap-search-box/
+    */
             function searchBar(){
                $("#inpt_search").on('focus', function () {
                	$(this).parent('label').addClass('active');
@@ -59,7 +64,6 @@
                		$(this).parent('label').removeClass('active');
                }); 
             }
-
     </script>
 
 </head>
